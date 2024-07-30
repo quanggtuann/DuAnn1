@@ -1,0 +1,25 @@
+﻿using System;
+using System.Collections.Generic;
+
+namespace DTO.Models
+{
+    public partial class KhachHang
+    {
+        public KhachHang()
+        {
+            HoaDons = new HashSet<HoaDon>();
+        }
+
+        public string IdKhachHang { get; set; } = null!;
+        public string? HoTen { get; set; }
+        public string? Email { get; set; }
+        public string? Sdt { get; set; }
+        public string? DiaChi { get; set; }
+        public string? ThanhPho { get; set; }
+        public string? QuocGia { get; set; }
+        public DateTime? NgayDangKi { get; set; }
+        public string? GhiChu { get; set; }
+
+        public virtual ICollection<HoaDon> HoaDons { get; set; }
+    }
+}
