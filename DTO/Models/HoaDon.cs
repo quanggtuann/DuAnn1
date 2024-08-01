@@ -5,23 +5,19 @@ namespace DTO.Models
 {
     public partial class HoaDon
     {
-        public HoaDon()
-        {
-            HoaDonChiTiets = new HashSet<HoaDonChiTiet>();
-        }
-
-        public string IdHoaDon { get; set; } = null!;
-        public string IdNhanVien { get; set; } = null!;
-        public string IdKhachHang { get; set; } = null!;
-        public string IdMaGiamGia { get; set; } = null!;
+        public int IdHoaDon { get; set; }
+        public int IdChiTiet { get; set; }
+        public int IdSanPham { get; set; }
+        public int IdNhanVien { get; set; }
+        public int IdKhachHang { get; set; }
         public string? TrangThai { get; set; }
         public DateTime? NgayTao { get; set; }
         public decimal? ThanhTien { get; set; }
         public string? GhiChu { get; set; }
 
+        public virtual HoaDonChiTiet IdChiTietNavigation { get; set; } = null!;
         public virtual KhachHang IdKhachHangNavigation { get; set; } = null!;
-        public virtual MaGiamGium IdMaGiamGiaNavigation { get; set; } = null!;
         public virtual NhanVien IdNhanVienNavigation { get; set; } = null!;
-        public virtual ICollection<HoaDonChiTiet> HoaDonChiTiets { get; set; }
+        public virtual Sanpham IdSanPhamNavigation { get; set; } = null!;
     }
 }

@@ -10,15 +10,16 @@ namespace DTO.Models
             HoaDons = new HashSet<HoaDon>();
         }
 
-        public string IdNhanVien { get; set; } = null!;
+        public int IdNhanVien { get; set; }
         public string? HoTen { get; set; }
         public string? ChucVu { get; set; }
-        public string? BoPhan { get; set; }
         public DateTime? NgayBatDauLam { get; set; }
         public decimal? MucLuong { get; set; }
         public string? Email { get; set; }
         public string? Sdt { get; set; }
         public string? Cccd { get; set; }
+        public bool? Gioitinh { get; set; }
+        public bool? Trangthai { get; set; }
 
         public virtual ICollection<HoaDon> HoaDons { get; set; }
     }

@@ -10,7 +10,7 @@ namespace DTO.Models
             HoaDons = new HashSet<HoaDon>();
         }
 
-        public string IdKhachHang { get; set; } = null!;
+        public int IdKhachHang { get; set; }
         public string? HoTen { get; set; }
         public string? Email { get; set; }
         public string? Sdt { get; set; }

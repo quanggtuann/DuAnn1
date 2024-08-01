@@ -7,10 +7,10 @@ namespace DTO.Models
     {
         public MaGiamGium()
         {
-            HoaDons = new HashSet<HoaDon>();
+            HoaDonChiTiets = new HashSet<HoaDonChiTiet>();
         }
 
-        public string IdMaGiamGia { get; set; } = null!;
+        public int IdMaGiamGia { get; set; }
         public string? GiamGia { get; set; }
         public int? PhamTramGiam { get; set; }
         public DateTime? HieuLucTu { get; set; }
@@ -18,6 +18,6 @@ namespace DTO.Models
         public double? GiaTriDonHangToiThieu { get; set; }
         public string? PhamViSuDung { get; set; }
 
-        public virtual ICollection<HoaDon> HoaDons { get; set; }
+        public virtual ICollection<HoaDonChiTiet> HoaDonChiTiets { get; set; }
     }
 }

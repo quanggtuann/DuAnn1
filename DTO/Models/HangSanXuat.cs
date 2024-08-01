@@ -5,13 +5,8 @@ namespace DTO.Models
 {
     public partial class HangSanXuat
     {
-        public HangSanXuat()
-        {
-            Storages = new HashSet<Storage>();
-        }
-
-        public string IdHangSanXuat { get; set; } = null!;
-        public string IdSanPham { get; set; } = null!;
+        public int IdHangSanXuat { get; set; }
+        public int IdSanPham { get; set; }
         public string? TenHangSanXuat { get; set; }
         public string? DiaChi { get; set; }
         public string? Sdt { get; set; }
@@ -23,6 +18,5 @@ namespace DTO.Models
         public string? GhiChu { get; set; }
 
         public virtual Sanpham IdSanPhamNavigation { get; set; } = null!;
-        public virtual ICollection<Storage> Storages { get; set; }
     }
 }

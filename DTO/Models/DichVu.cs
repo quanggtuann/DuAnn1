@@ -10,13 +10,13 @@ namespace DTO.Models
             ChinhSachBaoHanhs = new HashSet<ChinhSachBaoHanh>();
         }
 
-        public string IdDichVu { get; set; } = null!;
-        public string IdSanPham { get; set; } = null!;
+        public int IdDichVu { get; set; }
+        public int IdSanPham { get; set; }
         public string? TenDichVu { get; set; }
         public string? MoTa { get; set; }
         public string? LoaiDichVu { get; set; }
         public int? GiaDichVu { get; set; }
-        public DateTime? ThoiGianThucHien { get; set; }
+        public string? ThoiGianThucHien { get; set; }
         public DateTime? NgayBatDauCungCap { get; set; }
         public DateTime? NgayKetThucCungCap { get; set; }
         public string? GhiChu { get; set; }

@@ -10,8 +10,8 @@ namespace DTO.Models
             ThongTinLienHes = new HashSet<ThongTinLienHe>();
         }
 
-        public string IdBaoHanh { get; set; } = null!;
-        public string IdDichVu { get; set; } = null!;
+        public int IdBaoHanh { get; set; }
+        public int IdDichVu { get; set; }
         public DateTime? NgayBatDau { get; set; }
         public DateTime? NgayKetThuc { get; set; }
         public string? ThoiGianBaoHanh { get; set; }

@@ -16,22 +16,20 @@ namespace DTO.Models
         {
         }
 
+        public virtual DbSet<BanPhim> BanPhims { get; set; } = null!;
         public virtual DbSet<ChinhSachBaoHanh> ChinhSachBaoHanhs { get; set; } = null!;
-        public virtual DbSet<CpuchiTiet> CpuchiTiets { get; set; } = null!;
-        public virtual DbSet<CputanNhiet> CputanNhiets { get; set; } = null!;
+        public virtual DbSet<Chuot> Chuots { get; set; } = null!;
         public virtual DbSet<DichVu> DichVus { get; set; } = null!;
-        public virtual DbSet<Gpu> Gpus { get; set; } = null!;
         public virtual DbSet<HangSanXuat> HangSanXuats { get; set; } = null!;
         public virtual DbSet<HoaDon> HoaDons { get; set; } = null!;
         public virtual DbSet<HoaDonChiTiet> HoaDonChiTiets { get; set; } = null!;
-        public virtual DbSet<Igpu> Igpus { get; set; } = null!;
         public virtual DbSet<KhachHang> KhachHangs { get; set; } = null!;
         public virtual DbSet<MaGiamGium> MaGiamGia { get; set; } = null!;
         public virtual DbSet<NhanVien> NhanViens { get; set; } = null!;
-        public virtual DbSet<Ram> Rams { get; set; } = null!;
         public virtual DbSet<Sanpham> Sanphams { get; set; } = null!;
-        public virtual DbSet<Storage> Storages { get; set; } = null!;
+        public virtual DbSet<Tainghe> Tainghes { get; set; } = null!;
         public virtual DbSet<ThongTinLienHe> ThongTinLienHes { get; set; } = null!;
+        public virtual DbSet<Xac> Xacs { get; set; } = null!;
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -44,16 +42,28 @@ namespace DTO.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<BanPhim>(entity =>
+            {
+                entity.HasKey(e => e.IdBanphim)
+                    .HasName("PK__BanPhim__87129051728EE7F5");
+
+                entity.ToTable("BanPhim");
+
+                entity.Property(e => e.IdBanphim).HasColumnName("Id_banphim");
+
+                entity.Property(e => e.Loaiketnoi).HasMaxLength(100);
+
+                entity.Property(e => e.TenBanPhim).HasMaxLength(100);
+            });
+
             modelBuilder.Entity<ChinhSachBaoHanh>(entity =>
             {
                 entity.HasKey(e => e.IdBaoHanh)
-                    .HasName("PK__ChinhSac__55EC3123DD083F1F");
+                    .HasName("PK__ChinhSac__55EC3123563BAFD9");
 
                 entity.ToTable("ChinhSachBaoHanh");
 
-                entity.Property(e => e.IdBaoHanh)
-                    .HasMaxLength(300)
-                    .HasColumnName("ID_BaoHanh");
+                entity.Property(e => e.IdBaoHanh).HasColumnName("ID_BaoHanh");
 
                 entity.Property(e => e.DieuKienBaoHanh).HasMaxLength(300);
 
@@ -61,9 +71,7 @@ namespace DTO.Models
 
                 entity.Property(e => e.GhiChu).HasMaxLength(300);
 
-                entity.Property(e => e.IdDichVu)
-                    .HasMaxLength(300)
-                    .HasColumnName("ID_DichVu");
+                entity.Property(e => e.IdDichVu).HasColumnName("ID_DichVu");
 
                 entity.Property(e => e.NgayBatDau).HasColumnType("date");
 
@@ -75,139 +83,39 @@ namespace DTO.Models
                     .WithMany(p => p.ChinhSachBaoHanhs)
                     .HasForeignKey(d => d.IdDichVu)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__ChinhSach__ID_Di__4E88ABD4");
+                    .HasConstraintName("FK__ChinhSach__ID_Di__59FA5E80");
             });
 
-            modelBuilder.Entity<CpuchiTiet>(entity =>
+            modelBuilder.Entity<Chuot>(entity =>
             {
-                entity.HasKey(e => e.IdCpu)
-                    .HasName("PK__CPUChiTi__2BF960E0A9072906");
+                entity.HasKey(e => e.IdChuot)
+                    .HasName("PK__Chuot__CBB4C97D97827816");
 
-                entity.ToTable("CPUChiTiet");
+                entity.ToTable("Chuot");
 
-                entity.Property(e => e.IdCpu)
-                    .HasMaxLength(300)
-                    .HasColumnName("ID_CPU");
+                entity.Property(e => e.IdChuot).HasColumnName("Id_chuot");
 
-                entity.Property(e => e.Amdpro)
-                    .HasMaxLength(300)
-                    .HasColumnName("AMDPRO");
+                entity.Property(e => e.Dpi).HasColumnName("DPI");
 
-                entity.Property(e => e.BaoHanh).HasColumnType("date");
+                entity.Property(e => e.Loaiketnoi)
+                    .HasMaxLength(100)
+                    .HasColumnName("loaiketnoi");
 
-                entity.Property(e => e.BoHuongDan).HasMaxLength(300);
-
-                entity.Property(e => e.DaLuong).HasMaxLength(300);
-
-                entity.Property(e => e.Dong).HasMaxLength(300);
-
-                entity.Property(e => e.Gia).HasColumnType("money");
-
-                entity.Property(e => e.GiaDinh).HasMaxLength(300);
-
-                entity.Property(e => e.HeThongHoTro).HasMaxLength(300);
-
-                entity.Property(e => e.HoTroOverclock).HasMaxLength(300);
-
-                entity.Property(e => e.IdIgpu)
-                    .HasMaxLength(300)
-                    .HasColumnName("ID_IGPU");
-
-                entity.Property(e => e.L1cache)
-                    .HasMaxLength(300)
-                    .HasColumnName("L1Cache");
-
-                entity.Property(e => e.L2cache)
-                    .HasMaxLength(300)
-                    .HasColumnName("L2Cache");
-
-                entity.Property(e => e.L3cache)
-                    .HasMaxLength(300)
-                    .HasColumnName("L3Cache");
-
-                entity.Property(e => e.LoaiThietKe).HasMaxLength(300);
-
-                entity.Property(e => e.Loi).HasMaxLength(300);
-
-                entity.Property(e => e.Luong).HasMaxLength(300);
-
-                entity.Property(e => e.LuongTonTdp)
-                    .HasMaxLength(300)
-                    .HasColumnName("LuongTonTDP");
-
-                entity.Property(e => e.NgayRaMat).HasColumnType("date");
-
-                entity.Property(e => e.NhietDoCpu)
-                    .HasMaxLength(300)
-                    .HasColumnName("NhietDoCPU");
-
-                entity.Property(e => e.PrecisionBoost).HasMaxLength(300);
-
-                entity.Property(e => e.Socket).HasMaxLength(300);
-
-                entity.Property(e => e.TanSoCoBan).HasMaxLength(300);
-
-                entity.Property(e => e.TanSoTurbo).HasMaxLength(300);
-
-                entity.Property(e => e.Ten).HasMaxLength(300);
-
-                entity.HasOne(d => d.IdIgpuNavigation)
-                    .WithMany(p => p.CpuchiTiets)
-                    .HasForeignKey(d => d.IdIgpu)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__CPUChiTie__ID_IG__3E52440B");
-            });
-
-            modelBuilder.Entity<CputanNhiet>(entity =>
-            {
-                entity.HasKey(e => e.IdCputanNhiet)
-                    .HasName("PK__CPUTanNh__F4F31C68092772FD");
-
-                entity.ToTable("CPUTanNhiet");
-
-                entity.Property(e => e.IdCputanNhiet)
-                    .HasMaxLength(300)
-                    .HasColumnName("ID_CPUTanNhiet");
-
-                entity.Property(e => e.BaoHanh).HasMaxLength(300);
-
-                entity.Property(e => e.DienApHoatDong).HasMaxLength(300);
-
-                entity.Property(e => e.Hang).HasMaxLength(300);
-
-                entity.Property(e => e.LoaiBearing).HasMaxLength(300);
-
-                entity.Property(e => e.LoaiTanNhiet).HasMaxLength(300);
-
-                entity.Property(e => e.LuongTdp).HasColumnName("LuongTDP");
-
-                entity.Property(e => e.LxWxH).HasMaxLength(300);
-
-                entity.Property(e => e.NgayRaMat).HasColumnType("date");
-
-                entity.Property(e => e.Socket).HasMaxLength(300);
-
-                entity.Property(e => e.TanNhietCpu).HasColumnName("TanNhietCPU");
-
-                entity.Property(e => e.Ten).HasMaxLength(300);
+                entity.Property(e => e.Tenchuot).HasMaxLength(100);
             });
 
             modelBuilder.Entity<DichVu>(entity =>
             {
                 entity.HasKey(e => e.IdDichVu)
-                    .HasName("PK__DichVu__6C465C9FBB51FB3F");
+                    .HasName("PK__DichVu__6C465C9F400ED0EC");
 
                 entity.ToTable("DichVu");
 
-                entity.Property(e => e.IdDichVu)
-                    .HasMaxLength(300)
-                    .HasColumnName("ID_DichVu");
+                entity.Property(e => e.IdDichVu).HasColumnName("ID_DichVu");
 
                 entity.Property(e => e.GhiChu).HasMaxLength(300);
 
-                entity.Property(e => e.IdSanPham)
-                    .HasMaxLength(300)
-                    .HasColumnName("ID_SanPham");
+                entity.Property(e => e.IdSanPham).HasColumnName("ID_SanPham");
 
                 entity.Property(e => e.LoaiDichVu).HasMaxLength(300);
 
@@ -219,97 +127,25 @@ namespace DTO.Models
 
                 entity.Property(e => e.TenDichVu).HasMaxLength(300);
 
-                entity.Property(e => e.ThoiGianThucHien).HasColumnType("date");
+                entity.Property(e => e.ThoiGianThucHien)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
 
                 entity.HasOne(d => d.IdSanPhamNavigation)
                     .WithMany(p => p.DichVus)
                     .HasForeignKey(d => d.IdSanPham)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__DichVu__ID_SanPh__4BAC3F29");
-            });
-
-            modelBuilder.Entity<Gpu>(entity =>
-            {
-                entity.HasKey(e => e.IdGpu)
-                    .HasName("PK__GPU__2EC9F1AE8605F654");
-
-                entity.ToTable("GPU");
-
-                entity.Property(e => e.IdGpu)
-                    .HasMaxLength(300)
-                    .HasColumnName("ID_GPU");
-
-                entity.Property(e => e.ChipDoHoa).HasMaxLength(300);
-
-                entity.Property(e => e.CongKetNoi).HasMaxLength(300);
-
-                entity.Property(e => e.Gia).HasColumnType("money");
-
-                entity.Property(e => e.HoTroDx12)
-                    .HasMaxLength(300)
-                    .HasColumnName("HoTroDX12");
-
-                entity.Property(e => e.KichCoBus).HasMaxLength(300);
-
-                entity.Property(e => e.KichCoChip).HasMaxLength(300);
-
-                entity.Property(e => e.KichCoGpu)
-                    .HasMaxLength(300)
-                    .HasColumnName("KichCoGPU");
-
-                entity.Property(e => e.L1cache)
-                    .HasMaxLength(300)
-                    .HasColumnName("L1Cache");
-
-                entity.Property(e => e.L2cache)
-                    .HasMaxLength(300)
-                    .HasColumnName("L2Cache");
-
-                entity.Property(e => e.LoaiVram).HasMaxLength(300);
-
-                entity.Property(e => e.Loi).HasMaxLength(300);
-
-                entity.Property(e => e.LoiRt)
-                    .HasMaxLength(300)
-                    .HasColumnName("LoiRT");
-
-                entity.Property(e => e.LoiTensor).HasMaxLength(300);
-
-                entity.Property(e => e.LuongTdp)
-                    .HasMaxLength(300)
-                    .HasColumnName("LuongTDP");
-
-                entity.Property(e => e.NgayRaMat).HasColumnType("date");
-
-                entity.Property(e => e.NguonChip).HasMaxLength(300);
-
-                entity.Property(e => e.NguonKetNoi).HasMaxLength(300);
-
-                entity.Property(e => e.Rops)
-                    .HasMaxLength(300)
-                    .HasColumnName("ROPS");
-
-                entity.Property(e => e.Ten).HasMaxLength(300);
-
-                entity.Property(e => e.Tmus)
-                    .HasMaxLength(300)
-                    .HasColumnName("TMUS");
-
-                entity.Property(e => e.Vram)
-                    .HasMaxLength(300)
-                    .HasColumnName("VRam");
+                    .HasConstraintName("FK__DichVu__ID_SanPh__571DF1D5");
             });
 
             modelBuilder.Entity<HangSanXuat>(entity =>
             {
                 entity.HasKey(e => e.IdHangSanXuat)
-                    .HasName("PK__HangSanX__434B0283F7F560CF");
+                    .HasName("PK__HangSanX__434B02836DC8A20E");
 
                 entity.ToTable("HangSanXuat");
 
-                entity.Property(e => e.IdHangSanXuat)
-                    .HasMaxLength(300)
-                    .HasColumnName("ID_HangSanXuat");
+                entity.Property(e => e.IdHangSanXuat).HasColumnName("ID_HangSanXuat");
 
                 entity.Property(e => e.DanhSachSanPham).HasMaxLength(300);
 
@@ -319,9 +155,7 @@ namespace DTO.Models
 
                 entity.Property(e => e.GhiChu).HasMaxLength(300);
 
-                entity.Property(e => e.IdSanPham)
-                    .HasMaxLength(300)
-                    .HasColumnName("ID_SanPham");
+                entity.Property(e => e.IdSanPham).HasColumnName("ID_SanPham");
 
                 entity.Property(e => e.NgayHopTac).HasColumnType("date");
 
@@ -341,33 +175,27 @@ namespace DTO.Models
                     .WithMany(p => p.HangSanXuats)
                     .HasForeignKey(d => d.IdSanPham)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__HangSanXu__ID_Sa__48CFD27E");
+                    .HasConstraintName("FK__HangSanXu__ID_Sa__5441852A");
             });
 
             modelBuilder.Entity<HoaDon>(entity =>
             {
                 entity.HasKey(e => e.IdHoaDon)
-                    .HasName("PK__HoaDon__14AFCFC5D9044691");
+                    .HasName("PK__HoaDon__14AFCFC5702B15BA");
 
                 entity.ToTable("HoaDon");
 
-                entity.Property(e => e.IdHoaDon)
-                    .HasMaxLength(300)
-                    .HasColumnName("ID_HoaDon");
+                entity.Property(e => e.IdHoaDon).HasColumnName("ID_HoaDon");
 
                 entity.Property(e => e.GhiChu).HasMaxLength(100);
 
-                entity.Property(e => e.IdKhachHang)
-                    .HasMaxLength(300)
-                    .HasColumnName("ID_KhachHang");
+                entity.Property(e => e.IdChiTiet).HasColumnName("ID_ChiTiet");
 
-                entity.Property(e => e.IdMaGiamGia)
-                    .HasMaxLength(300)
-                    .HasColumnName("ID_MaGiamGia");
+                entity.Property(e => e.IdKhachHang).HasColumnName("ID_KhachHang");
 
-                entity.Property(e => e.IdNhanVien)
-                    .HasMaxLength(300)
-                    .HasColumnName("ID_NhanVien");
+                entity.Property(e => e.IdNhanVien).HasColumnName("ID_NhanVien");
+
+                entity.Property(e => e.IdSanPham).HasColumnName("ID_SanPham");
 
                 entity.Property(e => e.NgayTao).HasColumnType("date");
 
@@ -375,47 +203,45 @@ namespace DTO.Models
 
                 entity.Property(e => e.TrangThai).HasMaxLength(50);
 
+                entity.HasOne(d => d.IdChiTietNavigation)
+                    .WithMany(p => p.HoaDons)
+                    .HasForeignKey(d => d.IdChiTiet)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__HoaDon__ID_ChiTi__4E88ABD4");
+
                 entity.HasOne(d => d.IdKhachHangNavigation)
                     .WithMany(p => p.HoaDons)
                     .HasForeignKey(d => d.IdKhachHang)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__HoaDon__ID_Khach__5EBF139D");
-
-                entity.HasOne(d => d.IdMaGiamGiaNavigation)
-                    .WithMany(p => p.HoaDons)
-                    .HasForeignKey(d => d.IdMaGiamGia)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__HoaDon__ID_MaGia__5FB337D6");
+                    .HasConstraintName("FK__HoaDon__ID_Khach__5165187F");
 
                 entity.HasOne(d => d.IdNhanVienNavigation)
                     .WithMany(p => p.HoaDons)
                     .HasForeignKey(d => d.IdNhanVien)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__HoaDon__ID_NhanV__5DCAEF64");
+                    .HasConstraintName("FK__HoaDon__ID_NhanV__5070F446");
+
+                entity.HasOne(d => d.IdSanPhamNavigation)
+                    .WithMany(p => p.HoaDons)
+                    .HasForeignKey(d => d.IdSanPham)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__HoaDon__ID_SanPh__4F7CD00D");
             });
 
             modelBuilder.Entity<HoaDonChiTiet>(entity =>
             {
                 entity.HasKey(e => e.IdChiTiet)
-                    .HasName("PK__HoaDonCh__1EF2F7059018B0E0");
+                    .HasName("PK__HoaDonCh__1EF2F7050C109601");
 
                 entity.ToTable("HoaDonChiTiet");
 
-                entity.Property(e => e.IdChiTiet)
-                    .HasMaxLength(100)
-                    .HasColumnName("ID_ChiTiet");
+                entity.Property(e => e.IdChiTiet).HasColumnName("ID_ChiTiet");
 
                 entity.Property(e => e.GhiChu).HasMaxLength(100);
 
                 entity.Property(e => e.GiaBan).HasColumnType("money");
 
-                entity.Property(e => e.IdHoaDon)
-                    .HasMaxLength(300)
-                    .HasColumnName("ID_HoaDon");
-
-                entity.Property(e => e.IdSanPham)
-                    .HasMaxLength(300)
-                    .HasColumnName("ID_SanPham");
+                entity.Property(e => e.IdMaGiamGia).HasColumnName("ID_MaGiamGia");
 
                 entity.Property(e => e.PhuongThucThanhToan).HasMaxLength(200);
 
@@ -423,54 +249,21 @@ namespace DTO.Models
 
                 entity.Property(e => e.TrangThai).HasMaxLength(200);
 
-                entity.HasOne(d => d.IdHoaDonNavigation)
+                entity.HasOne(d => d.IdMaGiamGiaNavigation)
                     .WithMany(p => p.HoaDonChiTiets)
-                    .HasForeignKey(d => d.IdHoaDon)
+                    .HasForeignKey(d => d.IdMaGiamGia)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__HoaDonChi__ID_Ho__628FA481");
-
-                entity.HasOne(d => d.IdSanPhamNavigation)
-                    .WithMany(p => p.HoaDonChiTiets)
-                    .HasForeignKey(d => d.IdSanPham)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__HoaDonChi__ID_Sa__6383C8BA");
-            });
-
-            modelBuilder.Entity<Igpu>(entity =>
-            {
-                entity.HasKey(e => e.IdIgpu)
-                    .HasName("PK__IGPU__52E9A0EBDAB80D81");
-
-                entity.ToTable("IGPU");
-
-                entity.HasIndex(e => e.TenModel, "UQ__IGPU__BB9657F0BF543650")
-                    .IsUnique();
-
-                entity.Property(e => e.IdIgpu)
-                    .HasMaxLength(300)
-                    .HasColumnName("ID_IGPU");
-
-                entity.Property(e => e.LoiIgpu)
-                    .HasMaxLength(300)
-                    .HasColumnName("LoiIGPU");
-
-                entity.Property(e => e.TanSoIgpu)
-                    .HasMaxLength(300)
-                    .HasColumnName("TanSoIGPU");
-
-                entity.Property(e => e.TenModel).HasMaxLength(300);
+                    .HasConstraintName("FK__HoaDonChi__ID_Ma__4BAC3F29");
             });
 
             modelBuilder.Entity<KhachHang>(entity =>
             {
                 entity.HasKey(e => e.IdKhachHang)
-                    .HasName("PK__KhachHan__263C4E85B06D60DB");
+                    .HasName("PK__KhachHan__263C4E857635C071");
 
                 entity.ToTable("KhachHang");
 
-                entity.Property(e => e.IdKhachHang)
-                    .HasMaxLength(300)
-                    .HasColumnName("ID_KhachHang");
+                entity.Property(e => e.IdKhachHang).HasColumnName("ID_KhachHang");
 
                 entity.Property(e => e.DiaChi).HasMaxLength(100);
 
@@ -494,11 +287,9 @@ namespace DTO.Models
             modelBuilder.Entity<MaGiamGium>(entity =>
             {
                 entity.HasKey(e => e.IdMaGiamGia)
-                    .HasName("PK__MaGiamGi__3BDA8EB04FFABAAF");
+                    .HasName("PK__MaGiamGi__3BDA8EB0B0A409B4");
 
-                entity.Property(e => e.IdMaGiamGia)
-                    .HasMaxLength(300)
-                    .HasColumnName("ID_MaGiamGia");
+                entity.Property(e => e.IdMaGiamGia).HasColumnName("ID_MaGiamGia");
 
                 entity.Property(e => e.GiamGia).HasMaxLength(300);
 
@@ -512,18 +303,14 @@ namespace DTO.Models
             modelBuilder.Entity<NhanVien>(entity =>
             {
                 entity.HasKey(e => e.IdNhanVien)
-                    .HasName("PK__NhanVien__EF603D12DBCDC936");
+                    .HasName("PK__NhanVien__EF603D122E721B7C");
 
                 entity.ToTable("NhanVien");
 
-                entity.HasIndex(e => e.HoTen, "UQ__NhanVien__27AEE13CE7139446")
+                entity.HasIndex(e => e.HoTen, "UQ__NhanVien__27AEE13C86F640AB")
                     .IsUnique();
 
-                entity.Property(e => e.IdNhanVien)
-                    .HasMaxLength(300)
-                    .HasColumnName("ID_NhanVien");
-
-                entity.Property(e => e.BoPhan).HasMaxLength(100);
+                entity.Property(e => e.IdNhanVien).HasColumnName("ID_NhanVien");
 
                 entity.Property(e => e.Cccd)
                     .HasMaxLength(200)
@@ -533,6 +320,8 @@ namespace DTO.Models
 
                 entity.Property(e => e.Email).HasMaxLength(500);
 
+                entity.Property(e => e.Gioitinh).HasColumnName("gioitinh");
+
                 entity.Property(e => e.HoTen).HasMaxLength(200);
 
                 entity.Property(e => e.MucLuong).HasColumnType("money");
@@ -540,50 +329,22 @@ namespace DTO.Models
                 entity.Property(e => e.NgayBatDauLam).HasColumnType("date");
 
                 entity.Property(e => e.Sdt)
-                    .HasMaxLength(11)
-                    .HasColumnName("SDT");
-            });
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("SDT")
+                    .IsFixedLength();
 
-            modelBuilder.Entity<Ram>(entity =>
-            {
-                entity.HasKey(e => e.IdRam)
-                    .HasName("PK__Ram__202A43E9605CA6E2");
-
-                entity.ToTable("Ram");
-
-                entity.Property(e => e.IdRam)
-                    .HasMaxLength(300)
-                    .HasColumnName("ID_Ram");
-
-                entity.Property(e => e.BaoHanh).HasMaxLength(500);
-
-                entity.Property(e => e.DongGoi).HasMaxLength(100);
-
-                entity.Property(e => e.Gia).HasColumnType("money");
-
-                entity.Property(e => e.HoTroEec)
-                    .HasMaxLength(100)
-                    .HasColumnName("HoTroEEC");
-
-                entity.Property(e => e.LoaiRam).HasMaxLength(500);
-
-                entity.Property(e => e.Mau).HasMaxLength(100);
-
-                entity.Property(e => e.TanNhiet).HasMaxLength(500);
-
-                entity.Property(e => e.Ten).HasMaxLength(500);
+                entity.Property(e => e.Trangthai).HasColumnName("trangthai");
             });
 
             modelBuilder.Entity<Sanpham>(entity =>
             {
                 entity.HasKey(e => e.IdSanpham)
-                    .HasName("PK__Sanpham__6F92EF6ADD6054F2");
+                    .HasName("PK__Sanpham__6F92EF6A1906D64E");
 
                 entity.ToTable("Sanpham");
 
-                entity.Property(e => e.IdSanpham)
-                    .HasMaxLength(300)
-                    .HasColumnName("ID_Sanpham");
+                entity.Property(e => e.IdSanpham).HasColumnName("ID_Sanpham");
 
                 entity.Property(e => e.BoNhoRam).HasMaxLength(300);
 
@@ -593,25 +354,17 @@ namespace DTO.Models
 
                 entity.Property(e => e.HeDieuHanh).HasMaxLength(300);
 
-                entity.Property(e => e.IdCpu)
-                    .HasMaxLength(300)
-                    .HasColumnName("ID_CPU");
+                entity.Property(e => e.IdBanphim).HasColumnName("Id_banphim");
 
-                entity.Property(e => e.IdCputanNhiet)
-                    .HasMaxLength(300)
-                    .HasColumnName("ID_CPUTanNhiet");
+                entity.Property(e => e.IdChuot).HasColumnName("Id_chuot");
 
-                entity.Property(e => e.IdGpu)
-                    .HasMaxLength(300)
-                    .HasColumnName("ID_GPU");
+                entity.Property(e => e.IdTainghe).HasColumnName("Id_tainghe");
 
-                entity.Property(e => e.IdRam)
-                    .HasMaxLength(300)
-                    .HasColumnName("ID_Ram");
+                entity.Property(e => e.IdXac).HasColumnName("Id_Xac");
 
-                entity.Property(e => e.Ochung)
+                entity.Property(e => e.Ocung)
                     .HasMaxLength(300)
-                    .HasColumnName("OChung");
+                    .HasColumnName("OCung");
 
                 entity.Property(e => e.Soluong).HasColumnName("soluong");
 
@@ -619,85 +372,51 @@ namespace DTO.Models
 
                 entity.Property(e => e.ThuongHieu).HasMaxLength(100);
 
-                entity.HasOne(d => d.IdCpuNavigation)
+                entity.HasOne(d => d.IdBanphimNavigation)
                     .WithMany(p => p.Sanphams)
-                    .HasForeignKey(d => d.IdCpu)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Sanpham__ID_CPU__4316F928");
+                    .HasForeignKey(d => d.IdBanphim)
+                    .HasConstraintName("FK__Sanpham__Id_banp__403A8C7D");
 
-                entity.HasOne(d => d.IdCputanNhietNavigation)
+                entity.HasOne(d => d.IdChuotNavigation)
                     .WithMany(p => p.Sanphams)
-                    .HasForeignKey(d => d.IdCputanNhiet)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Sanpham__ID_CPUT__45F365D3");
+                    .HasForeignKey(d => d.IdChuot)
+                    .HasConstraintName("FK__Sanpham__Id_chuo__3F466844");
 
-                entity.HasOne(d => d.IdGpuNavigation)
+                entity.HasOne(d => d.IdTaingheNavigation)
                     .WithMany(p => p.Sanphams)
-                    .HasForeignKey(d => d.IdGpu)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Sanpham__ID_GPU__440B1D61");
+                    .HasForeignKey(d => d.IdTainghe)
+                    .HasConstraintName("FK__Sanpham__Id_tain__4222D4EF");
 
-                entity.HasOne(d => d.IdRamNavigation)
+                entity.HasOne(d => d.IdXacNavigation)
                     .WithMany(p => p.Sanphams)
-                    .HasForeignKey(d => d.IdRam)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Sanpham__ID_Ram__44FF419A");
+                    .HasForeignKey(d => d.IdXac)
+                    .HasConstraintName("FK__Sanpham__Id_Xac__412EB0B6");
             });
 
-            modelBuilder.Entity<Storage>(entity =>
+            modelBuilder.Entity<Tainghe>(entity =>
             {
-                entity.HasKey(e => e.IdStorage)
-                    .HasName("PK__Storage__C6296E1A1CD3598D");
+                entity.HasKey(e => e.IdTainghe)
+                    .HasName("PK__Tainghe__8B71856AEC129777");
 
-                entity.ToTable("Storage");
+                entity.ToTable("Tainghe");
 
-                entity.Property(e => e.IdStorage)
-                    .HasMaxLength(300)
-                    .HasColumnName("ID_Storage");
+                entity.Property(e => e.IdTainghe).HasColumnName("Id_tainghe");
 
-                entity.Property(e => e.BaoHanh).HasColumnType("date");
+                entity.Property(e => e.LoaiKetnoi).HasMaxLength(100);
 
-                entity.Property(e => e.DungLuong).HasMaxLength(300);
+                entity.Property(e => e.Loaitainghe).HasMaxLength(100);
 
-                entity.Property(e => e.GiaoDien).HasMaxLength(300);
-
-                entity.Property(e => e.Hang).HasMaxLength(300);
-
-                entity.Property(e => e.HoTroTanNhiet).HasMaxLength(300);
-
-                entity.Property(e => e.IdHangSanXuat)
-                    .HasMaxLength(300)
-                    .HasColumnName("ID_HangSanXuat");
-
-                entity.Property(e => e.KieuFlash).HasMaxLength(300);
-
-                entity.Property(e => e.LoaiBoNho).HasMaxLength(300);
-
-                entity.Property(e => e.NgayRaMat).HasColumnType("date");
-
-                entity.Property(e => e.TenBoNho).HasMaxLength(300);
-
-                entity.Property(e => e.TocDoDoc).HasMaxLength(300);
-
-                entity.Property(e => e.TocDoGhi).HasMaxLength(300);
-
-                entity.HasOne(d => d.IdHangSanXuatNavigation)
-                    .WithMany(p => p.Storages)
-                    .HasForeignKey(d => d.IdHangSanXuat)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Storage__ID_Hang__5441852A");
+                entity.Property(e => e.TenTaiNghe).HasMaxLength(100);
             });
 
             modelBuilder.Entity<ThongTinLienHe>(entity =>
             {
                 entity.HasKey(e => e.IdLienHe)
-                    .HasName("PK__ThongTin__2E67B9C559076BFB");
+                    .HasName("PK__ThongTin__2E67B9C57D260F72");
 
                 entity.ToTable("ThongTinLienHe");
 
-                entity.Property(e => e.IdLienHe)
-                    .HasMaxLength(300)
-                    .HasColumnName("ID_LienHe");
+                entity.Property(e => e.IdLienHe).HasColumnName("ID_LienHe");
 
                 entity.Property(e => e.DiaChi).HasMaxLength(500);
 
@@ -705,17 +424,35 @@ namespace DTO.Models
 
                 entity.Property(e => e.GhiChu).HasMaxLength(500);
 
-                entity.Property(e => e.IdBaoHanh)
-                    .HasMaxLength(300)
-                    .HasColumnName("ID_BaoHanh");
+                entity.Property(e => e.IdBaoHanh).HasColumnName("ID_BaoHanh");
 
-                entity.Property(e => e.Sdt).HasColumnName("SDT");
+                entity.Property(e => e.Sdt)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("SDT")
+                    .IsFixedLength();
 
                 entity.HasOne(d => d.IdBaoHanhNavigation)
                     .WithMany(p => p.ThongTinLienHes)
                     .HasForeignKey(d => d.IdBaoHanh)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__ThongTinL__ID_Ba__5165187F");
+                    .HasConstraintName("FK__ThongTinL__ID_Ba__5CD6CB2B");
+            });
+
+            modelBuilder.Entity<Xac>(entity =>
+            {
+                entity.HasKey(e => e.IdXac)
+                    .HasName("PK__Xac__56263660AEEAB08A");
+
+                entity.ToTable("Xac");
+
+                entity.Property(e => e.IdXac).HasColumnName("Id_Xac");
+
+                entity.Property(e => e.CongXuat).HasColumnName("Cong_xuat");
+
+                entity.Property(e => e.Congxac).HasMaxLength(100);
+
+                entity.Property(e => e.Tenxac).HasMaxLength(100);
             });
 
             OnModelCreatingPartial(modelBuilder);
