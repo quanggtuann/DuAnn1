@@ -751,8 +751,58 @@ namespace DuAnn1
             txtgmail.Text = "";
             txtsodienthoai.Text = "";
             txtcccd.Text = "";
-            rdolam.Checked= false;
+            rdolam.Checked = false;
             dtpngaybatdaulam.Value = DateTime.Now;
         }
+
+        private void label33_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnnghiviec_Click(object sender, EventArgs e)
+        {
+            var danhSachNghiViecForm = new nhanviennghi();
+            danhSachNghiViecForm.Show();
+        }
+
+        private void txttimnv_TextChanged(object sender, EventArgs e)
+        {
+            List<NhanVien> timten;
+
+            // Tìm kiếm nhân viên theo ID nếu đầu vào là số
+            if (int.TryParse(txttimnv.Text, out int idnv))
+            {
+                timten = nhanvienBLL.TimKiemid(txttimnv.Text); // Sử dụng chuỗi cho phương thức TimKiemid
+            }
+            else
+            {
+                timten = nhanvienBLL.TimKiem(txttimnv.Text);
+            }
+
+            dtnv.Rows.Clear();
+
+            foreach (var nv in timten)
+            {
+                DataRow row = dtnv.NewRow();
+                row["ID Nhân Viên"] = nv.IdNhanVien;
+                row["Họ Tên"] = nv.HoTen;
+                row["Ngày Bắt Đầu Làm"] = nv.NgayBatDauLam;
+                row["Giới Tính"] = nv.Gioitinh;
+                row["Căn Cước Công Nhân"] = nv.Cccd;
+                row["Số Điện Thoại"] = nv.Sdt;
+                row["Mức Lương"] = nv.MucLuong;
+                row["Trạng Thái"] = nv.Trangthai;
+                row["Email"] = nv.Email;
+                row["Chức Vụ"] = nv.ChucVu;
+                dtnv.Rows.Add(row); 
+            }
+
+            dgvnhanvien.DataSource = dtnv; 
+            dgvnhanvien.Refresh(); 
+        }
+
+
+
     }
 }

@@ -16,7 +16,7 @@ namespace DAL
 
         public List<NhanVien> Getlist()
         {
-            return _context.NhanViens.ToList();
+            return _context.NhanViens.Where(nv => nv.Trangthai == true).ToList();
         }
 
         public void GetThem(NhanVien nhanVien)
@@ -61,6 +61,10 @@ namespace DAL
                 _context.NhanViens.Remove(nhanVien);
                 _context.SaveChanges();
             }
+        }
+        public List<NhanVien> GetNhanVienNghiViec()
+        {
+            return _context.NhanViens.Where(nv => nv.Trangthai == false).ToList();
         }
     }
 }

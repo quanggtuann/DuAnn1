@@ -44,5 +44,10 @@ namespace BLL
         {
             nhanvienDAL.GetXoa(xoa);
         }
+
+        public List<NhanVien> LayDanhSachNhanVienNghiViec()
+        {
+            return nhanvienDAL.GetNhanVienNghiViec();
+        }
     }
 }

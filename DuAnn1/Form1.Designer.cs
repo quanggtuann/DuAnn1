@@ -857,6 +857,7 @@
             btnnghiviec.TabIndex = 21;
             btnnghiviec.Text = "Nghỉ Việc";
             btnnghiviec.UseVisualStyleBackColor = false;
+            btnnghiviec.Click += btnnghiviec_Click;
             // 
             // rdonghi
             // 
@@ -908,6 +909,7 @@
             txttimnv.Name = "txttimnv";
             txttimnv.Size = new Size(219, 27);
             txttimnv.TabIndex = 19;
+            txttimnv.TextChanged += txttimnv_TextChanged;
             // 
             // btnressetnv
             // 
