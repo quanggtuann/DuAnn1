@@ -96,8 +96,9 @@
             txtsdt = new TextBox();
             txtkhachhang = new TextBox();
             nhanvien = new Panel();
-            radioButton2 = new RadioButton();
-            radioButton1 = new RadioButton();
+            btnnghiviec = new Button();
+            rdonghi = new RadioButton();
+            rdolam = new RadioButton();
             la = new Label();
             timnhanvien = new Label();
             txttimnv = new TextBox();
@@ -105,7 +106,7 @@
             btnxoanv = new Button();
             btnsuanv = new Button();
             btnthemnv = new Button();
-            dataGridView1 = new DataGridView();
+            dgvnhanvien = new DataGridView();
             groupBox3 = new GroupBox();
             rdonu = new RadioButton();
             rdonam = new RadioButton();
@@ -115,7 +116,7 @@
             txtsodienthoai = new TextBox();
             txtgmail = new TextBox();
             txtluong = new TextBox();
-            txtidnhanvien = new TextBox();
+            txtnhanvien = new TextBox();
             txtid = new TextBox();
             label32 = new Label();
             label31 = new Label();
@@ -126,7 +127,6 @@
             label26 = new Label();
             label25 = new Label();
             label24 = new Label();
-            btnnghiviec = new Button();
             sanpham.SuspendLayout();
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvsanpham).BeginInit();
@@ -135,7 +135,7 @@
             ((System.ComponentModel.ISupportInitialize)dgvkhachhang).BeginInit();
             groupBox2.SuspendLayout();
             nhanvien.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvnhanvien).BeginInit();
             groupBox3.SuspendLayout();
             SuspendLayout();
             // 
@@ -830,8 +830,8 @@
             // nhanvien
             // 
             nhanvien.Controls.Add(btnnghiviec);
-            nhanvien.Controls.Add(radioButton2);
-            nhanvien.Controls.Add(radioButton1);
+            nhanvien.Controls.Add(rdonghi);
+            nhanvien.Controls.Add(rdolam);
             nhanvien.Controls.Add(la);
             nhanvien.Controls.Add(timnhanvien);
             nhanvien.Controls.Add(txttimnv);
@@ -839,36 +839,48 @@
             nhanvien.Controls.Add(btnxoanv);
             nhanvien.Controls.Add(btnsuanv);
             nhanvien.Controls.Add(btnthemnv);
-            nhanvien.Controls.Add(dataGridView1);
+            nhanvien.Controls.Add(dgvnhanvien);
             nhanvien.Controls.Add(groupBox3);
             nhanvien.Location = new Point(2, 110);
             nhanvien.Name = "nhanvien";
             nhanvien.Size = new Size(1458, 660);
             nhanvien.TabIndex = 18;
+            nhanvien.Paint += nhanvien_Paint;
             // 
-            // radioButton2
+            // btnnghiviec
             // 
-            radioButton2.AutoSize = true;
-            radioButton2.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            radioButton2.Location = new Point(450, 280);
-            radioButton2.Name = "radioButton2";
-            radioButton2.Size = new Size(97, 24);
-            radioButton2.TabIndex = 20;
-            radioButton2.TabStop = true;
-            radioButton2.Text = "Nghỉ Việc";
-            radioButton2.UseVisualStyleBackColor = true;
+            btnnghiviec.BackColor = SystemColors.ControlDarkDark;
+            btnnghiviec.ForeColor = SystemColors.ButtonFace;
+            btnnghiviec.Location = new Point(611, 257);
+            btnnghiviec.Name = "btnnghiviec";
+            btnnghiviec.Size = new Size(94, 41);
+            btnnghiviec.TabIndex = 21;
+            btnnghiviec.Text = "Nghỉ Việc";
+            btnnghiviec.UseVisualStyleBackColor = false;
             // 
-            // radioButton1
+            // rdonghi
             // 
-            radioButton1.AutoSize = true;
-            radioButton1.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
-            radioButton1.Location = new Point(450, 250);
-            radioButton1.Name = "radioButton1";
-            radioButton1.Size = new Size(134, 24);
-            radioButton1.TabIndex = 19;
-            radioButton1.TabStop = true;
-            radioButton1.Text = "Đang Làm Việc";
-            radioButton1.UseVisualStyleBackColor = true;
+            rdonghi.AutoSize = true;
+            rdonghi.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            rdonghi.Location = new Point(450, 280);
+            rdonghi.Name = "rdonghi";
+            rdonghi.Size = new Size(97, 24);
+            rdonghi.TabIndex = 20;
+            rdonghi.TabStop = true;
+            rdonghi.Text = "Nghỉ Việc";
+            rdonghi.UseVisualStyleBackColor = true;
+            // 
+            // rdolam
+            // 
+            rdolam.AutoSize = true;
+            rdolam.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            rdolam.Location = new Point(450, 250);
+            rdolam.Name = "rdolam";
+            rdolam.Size = new Size(134, 24);
+            rdolam.TabIndex = 19;
+            rdolam.TabStop = true;
+            rdolam.Text = "Đang Làm Việc";
+            rdolam.UseVisualStyleBackColor = true;
             // 
             // la
             // 
@@ -923,6 +935,7 @@
             btnsuanv.TabIndex = 3;
             btnsuanv.Text = "Update";
             btnsuanv.UseVisualStyleBackColor = true;
+            btnsuanv.Click += btnsuanv_Click;
             // 
             // btnthemnv
             // 
@@ -932,16 +945,19 @@
             btnthemnv.TabIndex = 2;
             btnthemnv.Text = "Add";
             btnthemnv.UseVisualStyleBackColor = true;
+            btnthemnv.Click += btnthemnv_Click;
             // 
-            // dataGridView1
+            // dgvnhanvien
             // 
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(3, 316);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.RowHeadersWidth = 51;
-            dataGridView1.RowTemplate.Height = 29;
-            dataGridView1.Size = new Size(1434, 337);
-            dataGridView1.TabIndex = 1;
+            dgvnhanvien.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvnhanvien.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvnhanvien.Location = new Point(3, 316);
+            dgvnhanvien.Name = "dgvnhanvien";
+            dgvnhanvien.RowHeadersWidth = 51;
+            dgvnhanvien.RowTemplate.Height = 29;
+            dgvnhanvien.Size = new Size(1434, 337);
+            dgvnhanvien.TabIndex = 1;
+            dgvnhanvien.CellClick += dgvnhanvien_CellClick;
             // 
             // groupBox3
             // 
@@ -953,7 +969,7 @@
             groupBox3.Controls.Add(txtsodienthoai);
             groupBox3.Controls.Add(txtgmail);
             groupBox3.Controls.Add(txtluong);
-            groupBox3.Controls.Add(txtidnhanvien);
+            groupBox3.Controls.Add(txtnhanvien);
             groupBox3.Controls.Add(txtid);
             groupBox3.Controls.Add(label32);
             groupBox3.Controls.Add(label31);
@@ -971,6 +987,7 @@
             groupBox3.TabIndex = 0;
             groupBox3.TabStop = false;
             groupBox3.Text = "Thiết Lập Thông Tin Nhân Viên";
+            groupBox3.Enter += groupBox3_Enter;
             // 
             // rdonu
             // 
@@ -1037,12 +1054,12 @@
             txtluong.Size = new Size(250, 30);
             txtluong.TabIndex = 11;
             // 
-            // txtidnhanvien
+            // txtnhanvien
             // 
-            txtidnhanvien.Location = new Point(114, 96);
-            txtidnhanvien.Name = "txtidnhanvien";
-            txtidnhanvien.Size = new Size(219, 30);
-            txtidnhanvien.TabIndex = 10;
+            txtnhanvien.Location = new Point(114, 96);
+            txtnhanvien.Name = "txtnhanvien";
+            txtnhanvien.Size = new Size(219, 30);
+            txtnhanvien.TabIndex = 10;
             // 
             // txtid
             // 
@@ -1133,17 +1150,6 @@
             label24.TabIndex = 0;
             label24.Text = "ID :";
             // 
-            // btnnghiviec
-            // 
-            btnnghiviec.BackColor = SystemColors.ControlDarkDark;
-            btnnghiviec.ForeColor = SystemColors.ButtonFace;
-            btnnghiviec.Location = new Point(611, 257);
-            btnnghiviec.Name = "btnnghiviec";
-            btnnghiviec.Size = new Size(94, 41);
-            btnnghiviec.TabIndex = 21;
-            btnnghiviec.Text = "Nghỉ Việc";
-            btnnghiviec.UseVisualStyleBackColor = false;
-            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -1164,6 +1170,7 @@
             Controls.Add(hoadon);
             Name = "Form1";
             Text = "Form1";
+            Load += Form1_Load;
             sanpham.ResumeLayout(false);
             sanpham.PerformLayout();
             groupBox1.ResumeLayout(false);
@@ -1177,7 +1184,7 @@
             groupBox2.PerformLayout();
             nhanvien.ResumeLayout(false);
             nhanvien.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvnhanvien).EndInit();
             groupBox3.ResumeLayout(false);
             groupBox3.PerformLayout();
             ResumeLayout(false);
@@ -1264,7 +1271,7 @@
         private Label label27;
         private Label label26;
         private TextBox txtluong;
-        private TextBox txtidnhanvien;
+        private TextBox txtnhanvien;
         private TextBox txtid;
         private DateTimePicker dtpngaybatdaulam;
         private TextBox txtcccd;
@@ -1279,9 +1286,9 @@
         private Button btnxoanv;
         private Button btnsuanv;
         private Button btnthemnv;
-        private DataGridView dataGridView1;
-        private RadioButton radioButton2;
-        private RadioButton radioButton1;
+        private DataGridView dgvnhanvien;
+        private RadioButton rdonghi;
+        private RadioButton rdolam;
         private Label la;
         private Button btnnghiviec;
     }

@@ -8,11 +8,11 @@ using System.Threading.Tasks;
 
 namespace BLL
 {
-    internal class NhanvienBLL
+    public class NhanvienBLL
     {
         NhanVienDAL nhanvienDAL = new NhanVienDAL();
 
-        public List<NhanVien> Getlistsp()
+        public List<NhanVien> Getlistnv()
         {
             var nhanViens = nhanvienDAL.Getlist();
             return nhanViens;

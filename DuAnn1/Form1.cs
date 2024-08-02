@@ -515,6 +515,231 @@ namespace DuAnn1
             txtquocgia.Text = "";
         }
 
+        NhanvienBLL nhanvienBLL = new NhanvienBLL();
+        DataTable dtnv = new DataTable();
+        private void Getloadbangnv()
+        {
+            dtnv.Columns.Clear();
+            dtnv.Columns.Add("ID Nhân Viên", typeof(int));
+            dtnv.Columns.Add("Họ Tên", typeof(string));
+            dtnv.Columns.Add("Chức Vụ", typeof(string));
+            dtnv.Columns.Add("Giới Tính", typeof(bool)); // Column for boolean values
+            dtnv.Columns.Add("Ngày Bắt Đầu Làm", typeof(DateTime));
+            dtnv.Columns.Add("Mức Lương", typeof(decimal));
+            dtnv.Columns.Add("Email", typeof(string));
+            dtnv.Columns.Add("Số Điện Thoại", typeof(string));
+            dtnv.Columns.Add("Căn Cước Công Nhân", typeof(string));
+            dtnv.Columns.Add("Trạng Thái", typeof(bool)); // Column for boolean values
+            dgvnhanvien.DataSource = dtnv;
+        }
+
+        public void GetloadCaiDatnv()
+        {
+            dtnv.Rows.Clear();
+            var nvs = nhanvienBLL.Getlistnv();
+            foreach (var nv in nvs)
+            {
+                DataRow dr = dtnv.NewRow();
+                dr["ID Nhân Viên"] = nv.IdNhanVien;
+                dr["Họ Tên"] = nv.HoTen;
+                dr["Chức Vụ"] = nv.ChucVu;
+                dr["Giới Tính"] = nv.Gioitinh;
+                dr["Ngày Bắt Đầu Làm"] = nv.NgayBatDauLam;
+                dr["Mức Lương"] = nv.MucLuong;
+                dr["Email"] = nv.Email;
+                dr["Số Điện Thoại"] = nv.Sdt;
+                dr["Căn Cước Công Nhân"] = nv.Cccd;
+                dr["Trạng Thái"] = nv.Trangthai;
+                dtnv.Rows.Add(dr);
+            }
+        }
+
+
+
+
+
+        private void groupBox3_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void nhanvien_Paint(object sender, PaintEventArgs e)
+        {
+            Getloadbangnv();
+            GetloadCaiDatnv();
+            if (cbbchucvu.Items.Count == 0)
+            {
+                cbbchucvu.Items.Add("Nhân viên bán hàng");
+                cbbchucvu.Items.Add("Kế Toán");
+                cbbchucvu.Items.Add("Quản lí");
+                cbbchucvu.Items.Add("Hỗ trợ kĩ thuật");
+                cbbchucvu.Items.Add("Nhân Viên Kho");
+                cbbchucvu.SelectedIndex = 0;
+            }
+        }
+
+        private void btnthemnv_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Bạn chắc chắn muốn thêm?", "Thêm sản phẩm", MessageBoxButtons.YesNo);
+
+            if (result == DialogResult.Yes)
+            {
+                try
+                {
+                    var ten = txtnhanvien.Text;
+                    var chucvu = cbbchucvu.Text;
+                    var gioitinh = (bool)rdonam.Checked;
+                    if (gioitinh == true)
+                    {
+                        rdonam.Checked = true;
+                    }
+                    else rdonu.Checked = true;
+                    DateTime ngaydangki;
+                    if (!DateTime.TryParse(dtpngaybatdaulam.Value.ToString(), out ngaydangki))
+                    {
+                        MessageBox.Show("Ngày đăng ký không hợp lệ.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    var mucluong = Convert.ToDecimal(txtluong.Text);
+                    var email = txtgmail.Text;
+                    var sdt = txtsodienthoai.Text;
+                    var cccd = txtcccd.Text;
+                    var trangthai = (bool)rdolam.Checked;
+                    if (trangthai == true)
+                    {
+                        rdolam.Checked = true;
+                    }
+                    else rdonghi.Checked = true;
+
+
+                    var dangthem = new NhanVien
+                    {
+                        HoTen = ten,
+                        ChucVu = chucvu,
+                        Gioitinh = gioitinh,
+                        NgayBatDauLam = ngaydangki,
+                        MucLuong = mucluong,
+                        Email = email,
+                        Sdt = sdt,
+                        Cccd = cccd,
+                        Trangthai = trangthai
+                    };
+
+                    nhanvienBLL.CNThem(dangthem);
+
+                    GetloadCaiDatnv();
+
+
+                    MessageBox.Show("Thêm thành công!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Đã xảy ra lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+
+        }
+
+
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnsuanv_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Bạn chắc chắn muốn sửa?", "Sửa thông tin", MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes)
+            {
+                DataRow dr = dtnv.Rows[dangchon];
+                var gioitinh = (bool)rdonam.Checked;
+                if (gioitinh == true)
+                {
+                    rdonam.Checked = true;
+                } else rdonu.Checked = true;
+
+                var trangthai = (bool)rdolam.Checked;
+                if (trangthai == true)
+                {
+                    rdolam.Checked = true;
+                }
+                else rdonghi.Checked = true;
+                dr["Họ Tên"] = txtnhanvien.Text;
+                dr["Chức Vụ"] = cbbchucvu.Text;                   
+                dr["Giới Tính"] =gioitinh;              
+                dr["Mức Lương"] = txtluong.Text;
+                dr["Email"] = txtgmail.Text;
+                dr["Số Điện Thoại"] = txtsodienthoai;
+                dr["Căn Cước Công Nhân"] = txtcccd.Text;
+                dr["Trạng Thái"] =trangthai;
+
+                if (DateTime.TryParse(dtpngaybatdaulam.Value.ToString(), out DateTime ngayDangKi))
+                {
+                    dr["Ngày Bắt Đầu Làm"] = ngayDangKi;
+                }
+                else
+                {
+                    MessageBox.Show("Ngày đăng ký không hợp lệ.");
+                    return;
+                }
+
+
+                var nhanVien = new NhanVien
+                {
+                    HoTen = txtnhanvien.Text,
+                    ChucVu = cbbchucvu.Text,
+                    Gioitinh = gioitinh,
+                    NgayBatDauLam = Convert.ToDateTime(dtpngaybatdaulam),
+                    MucLuong = Convert.ToDecimal(txtluong.Text),
+                    Email = txtgmail.Text,
+                    Sdt = txtsodienthoai.Text,
+                    Cccd = txtcccd.Text,
+                    Trangthai = trangthai
+
+
+                };
+                nhanvienBLL.CNsua(nhanVien);
+                dr["Họ Tên"] = txtnhanvien.Text;
+                dr["Chức Vụ"] = cbbchucvu.Text;
+                dr["Giới Tính"] = gioitinh;
+                dr["Ngày Bắt Đầu Làm"] = dtpngaybatdaulam;
+                dr["Mức Lương"] = txtluong.Text;
+                dr["Email"] = txtgmail.Text;
+                dr["Số Điện Thoại"] = txtsodienthoai.Text;
+                dr["Căn Cước Công Nhân"] = txtcccd.Text;
+                dr["Trạng Thái"] = trangthai;
+
+                MessageBox.Show("Sửa thành công");
+            }
+        }
+
+        private void dgvnhanvien_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+            DataGridViewRow chon = dgvnhanvien.Rows[e.RowIndex];
+            txtid.Text = chon.Cells[0].Value.ToString();
+            txtnhanvien.Text = chon.Cells[1].Value.ToString();
+            cbbchucvu.Text = chon.Cells[2].Value.ToString();
+            var gioitinh =(bool)chon.Cells[3].Value;
+            if (gioitinh == true)
+            {
+                rdonam.Checked = true;
+            }else rdonu.Checked = true;
+
+            dtpngaybatdaulam.Text = chon.Cells[4].Value.ToString();
+            txtluong.Text = chon.Cells[5].Value.ToString();
+            txtgmail.Text = chon.Cells[6].Value.ToString();
+            txtsodienthoai.Text = chon.Cells[7].Value.ToString();
+            txtcccd.Text = chon.Cells[8].Value.ToString();
+            var trangthai = (bool)chon.Cells[9].Value;
+            if(trangthai== true)
+            {
+                rdolam.Checked = true;
+
+            }else rdonghi.Checked = true;
+            dangchon = e.RowIndex;
+        }
 
 
     }
