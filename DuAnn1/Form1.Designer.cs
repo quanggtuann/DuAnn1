@@ -917,6 +917,7 @@
             btnressetnv.TabIndex = 5;
             btnressetnv.Text = "Reset";
             btnressetnv.UseVisualStyleBackColor = true;
+            btnressetnv.Click += btnressetnv_Click;
             // 
             // btnxoanv
             // 
@@ -926,6 +927,7 @@
             btnxoanv.TabIndex = 4;
             btnxoanv.Text = "Delete";
             btnxoanv.UseVisualStyleBackColor = true;
+            btnxoanv.Click += btnxoanv_Click;
             // 
             // btnsuanv
             // 

@@ -653,66 +653,50 @@ namespace DuAnn1
             if (result == DialogResult.Yes)
             {
                 DataRow dr = dtnv.Rows[dangchon];
-                var gioitinh = (bool)rdonam.Checked;
-                if (gioitinh == true)
-                {
-                    rdonam.Checked = true;
-                } else rdonu.Checked = true;
 
-                var trangthai = (bool)rdolam.Checked;
-                if (trangthai == true)
-                {
-                    rdolam.Checked = true;
-                }
-                else rdonghi.Checked = true;
-                dr["Họ Tên"] = txtnhanvien.Text;
-                dr["Chức Vụ"] = cbbchucvu.Text;                   
-                dr["Giới Tính"] =gioitinh;              
-                dr["Mức Lương"] = txtluong.Text;
-                dr["Email"] = txtgmail.Text;
-                dr["Số Điện Thoại"] = txtsodienthoai;
-                dr["Căn Cước Công Nhân"] = txtcccd.Text;
-                dr["Trạng Thái"] =trangthai;
+                int maNhanVien = (int)dr["ID Nhân Viên"];
+
+                bool gioitinh = rdonam.Checked;
+                bool trangthai = rdolam.Checked;
 
                 if (DateTime.TryParse(dtpngaybatdaulam.Value.ToString(), out DateTime ngayDangKi))
                 {
+                    var nhanVien = new NhanVien
+                    {
+                        IdNhanVien = maNhanVien,
+                        HoTen = txtnhanvien.Text,
+                        ChucVu = cbbchucvu.Text,
+                        Gioitinh = gioitinh,
+                        NgayBatDauLam = ngayDangKi,
+                        MucLuong = decimal.TryParse(txtluong.Text, out var luong) ? luong : 0,
+                        Email = txtgmail.Text,
+                        Sdt = txtsodienthoai.Text,
+                        Cccd = txtcccd.Text,
+                        Trangthai = trangthai
+                    };
+
+                    nhanvienBLL.CNsua(nhanVien);
+
+                    dr["Họ Tên"] = txtnhanvien.Text;
+                    dr["Chức Vụ"] = cbbchucvu.Text;
+                    dr["Giới Tính"] = gioitinh;
                     dr["Ngày Bắt Đầu Làm"] = ngayDangKi;
+                    dr["Mức Lương"] = txtluong.Text;
+                    dr["Email"] = txtgmail.Text;
+                    dr["Số Điện Thoại"] = txtsodienthoai.Text;
+                    dr["Căn Cước Công Nhân"] = txtcccd.Text;
+                    dr["Trạng Thái"] = trangthai;
+
+                    MessageBox.Show("Sửa thành công");
                 }
                 else
                 {
                     MessageBox.Show("Ngày đăng ký không hợp lệ.");
-                    return;
                 }
-
-
-                var nhanVien = new NhanVien
-                {
-                    HoTen = txtnhanvien.Text,
-                    ChucVu = cbbchucvu.Text,
-                    Gioitinh = gioitinh,
-                    NgayBatDauLam = Convert.ToDateTime(dtpngaybatdaulam),
-                    MucLuong = Convert.ToDecimal(txtluong.Text),
-                    Email = txtgmail.Text,
-                    Sdt = txtsodienthoai.Text,
-                    Cccd = txtcccd.Text,
-                    Trangthai = trangthai
-
-
-                };
-                nhanvienBLL.CNsua(nhanVien);
-                dr["Họ Tên"] = txtnhanvien.Text;
-                dr["Chức Vụ"] = cbbchucvu.Text;
-                dr["Giới Tính"] = gioitinh;
-                dr["Ngày Bắt Đầu Làm"] = dtpngaybatdaulam;
-                dr["Mức Lương"] = txtluong.Text;
-                dr["Email"] = txtgmail.Text;
-                dr["Số Điện Thoại"] = txtsodienthoai.Text;
-                dr["Căn Cước Công Nhân"] = txtcccd.Text;
-                dr["Trạng Thái"] = trangthai;
-
-                MessageBox.Show("Sửa thành công");
             }
         }
+
+
 
         private void dgvnhanvien_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -721,11 +705,12 @@ namespace DuAnn1
             txtid.Text = chon.Cells[0].Value.ToString();
             txtnhanvien.Text = chon.Cells[1].Value.ToString();
             cbbchucvu.Text = chon.Cells[2].Value.ToString();
-            var gioitinh =(bool)chon.Cells[3].Value;
+            var gioitinh = (bool)chon.Cells[3].Value;
             if (gioitinh == true)
             {
                 rdonam.Checked = true;
-            }else rdonu.Checked = true;
+            }
+            else rdonu.Checked = true;
 
             dtpngaybatdaulam.Text = chon.Cells[4].Value.ToString();
             txtluong.Text = chon.Cells[5].Value.ToString();
@@ -733,14 +718,41 @@ namespace DuAnn1
             txtsodienthoai.Text = chon.Cells[7].Value.ToString();
             txtcccd.Text = chon.Cells[8].Value.ToString();
             var trangthai = (bool)chon.Cells[9].Value;
-            if(trangthai== true)
+            if (trangthai == true)
             {
                 rdolam.Checked = true;
 
-            }else rdonghi.Checked = true;
+            }
+            else rdonghi.Checked = true;
             dangchon = e.RowIndex;
         }
 
+        private void btnxoanv_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("bạn chắc chắn muốn xóa", "Xóa nhân viên", MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes)
+            {
+                DialogResult tb = MessageBox.Show("Xóa thành công", "", MessageBoxButtons.OK);
+                var Id = Convert.ToInt32(dtnv.Rows[dangchon]["ID Nhân Viên"]);
+                nhanvienBLL.CNXoa(Id);
+                GetloadCaiDatnv();
+            }
+        }
 
+        private void btnressetnv_Click(object sender, EventArgs e)
+        {
+            txtid.Text = "";
+            txtnhanvien.Text = "";
+            cbbchucvu.Text = "";
+            rdonam.Checked = false;
+            rdonghi.Checked = false;
+            rdonu.Checked = false;
+            txtluong.Text = "";
+            txtgmail.Text = "";
+            txtsodienthoai.Text = "";
+            txtcccd.Text = "";
+            rdolam.Checked= false;
+            dtpngaybatdaulam.Value = DateTime.Now;
+        }
     }
 }
