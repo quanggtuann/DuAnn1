@@ -137,8 +137,7 @@ namespace DuAnn1
             hoadon.Visible = false;
             khachhang.Visible = false;
             nhanvien.Visible = false;
-
-
+            vocher.Visible = false;
             panelToShow.Visible = true;
         }
 
@@ -158,6 +157,7 @@ namespace DuAnn1
 
         private void btnvocher_Click(object sender, EventArgs e)
         {
+            ShowPanel(vocher);
         }
 
         private void btndichvu_Click(object sender, EventArgs e)
@@ -513,6 +513,10 @@ namespace DuAnn1
             txtdiachi.Text = "";
             txtthanhpho.Text = "";
             txtquocgia.Text = "";
+            txtghichu.Text = "";
+            dtpngaydangki.Value = DateTime.Now;
+
+
         }
 
         NhanvienBLL nhanvienBLL = new NhanvienBLL();
@@ -523,13 +527,13 @@ namespace DuAnn1
             dtnv.Columns.Add("ID Nhân Viên", typeof(int));
             dtnv.Columns.Add("Họ Tên", typeof(string));
             dtnv.Columns.Add("Chức Vụ", typeof(string));
-            dtnv.Columns.Add("Giới Tính", typeof(bool)); // Column for boolean values
+            dtnv.Columns.Add("Giới Tính", typeof(bool));
             dtnv.Columns.Add("Ngày Bắt Đầu Làm", typeof(DateTime));
             dtnv.Columns.Add("Mức Lương", typeof(decimal));
             dtnv.Columns.Add("Email", typeof(string));
             dtnv.Columns.Add("Số Điện Thoại", typeof(string));
             dtnv.Columns.Add("Căn Cước Công Nhân", typeof(string));
-            dtnv.Columns.Add("Trạng Thái", typeof(bool)); // Column for boolean values
+            dtnv.Columns.Add("Trạng Thái", typeof(bool));
             dgvnhanvien.DataSource = dtnv;
         }
 
@@ -770,10 +774,9 @@ namespace DuAnn1
         {
             List<NhanVien> timten;
 
-            // Tìm kiếm nhân viên theo ID nếu đầu vào là số
             if (int.TryParse(txttimnv.Text, out int idnv))
             {
-                timten = nhanvienBLL.TimKiemid(txttimnv.Text); // Sử dụng chuỗi cho phương thức TimKiemid
+                timten = nhanvienBLL.TimKiemid(txttimnv.Text);
             }
             else
             {
@@ -795,11 +798,270 @@ namespace DuAnn1
                 row["Trạng Thái"] = nv.Trangthai;
                 row["Email"] = nv.Email;
                 row["Chức Vụ"] = nv.ChucVu;
-                dtnv.Rows.Add(row); 
+                dtnv.Rows.Add(row);
             }
 
-            dgvnhanvien.DataSource = dtnv; 
-            dgvnhanvien.Refresh(); 
+            dgvnhanvien.DataSource = dtnv;
+            dgvnhanvien.Refresh();
+        }
+
+        private void vocher_Paint(object sender, PaintEventArgs e)
+        {
+            Getloadbangvocher();
+            GetloadCaiDatvocher();
+        }
+        VocherBLL vocherBLL = new VocherBLL();
+        DataTable dtvc = new DataTable();
+        private void Getloadbangvocher()
+        {
+            dtvc.Columns.Clear();
+            dtvc.Columns.Add("ID", typeof(int));
+            dtvc.Columns.Add("Tên Mã", typeof(string));
+            dtvc.Columns.Add("Phần Trăm Giảm", typeof(int));
+            dtvc.Columns.Add("Hiệu Lực Từ", typeof(DateTime));
+            dtvc.Columns.Add("Hiệu Lực Đến", typeof(DateTime));
+            dtvc.Columns.Add("Đơn Hàng Tối Thiểu", typeof(double));
+            dtvc.Columns.Add("Phạm Vi Sử Dụng", typeof(string));
+
+            dgvvocher.DataSource = dtvc;
+        }
+
+
+        public void GetloadCaiDatvocher()
+        {
+            dtvc.Rows.Clear();
+            var nvs = vocherBLL.Getlistvc();
+            if (nvs == null || !nvs.Any())
+            {
+                MessageBox.Show("Không có dữ liệu mã giảm giá.");
+                return;
+            }
+            foreach (var nv in nvs)
+            {
+                DataRow dr = dtvc.NewRow();
+                dr["ID"] = nv.IdMaGiamGia;
+                dr["Tên Mã"] = nv.GiamGia;
+                dr["Phần Trăm Giảm"] = nv.PhamTramGiam;
+                dr["Hiệu Lực Từ"] = nv.HieuLucTu;
+                dr["Hiệu Lực Đến"] = nv.HieuLucDen;
+                dr["Đơn Hàng Tối Thiểu"] = nv.GiaTriDonHangToiThieu;
+                dr["Phạm Vi Sử Dụng"] = nv.PhamViSuDung;
+
+                dtvc.Rows.Add(dr);
+            }
+        }
+
+        private void btnthemvc_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Bạn chắc chắn muốn thêm?", "Thêm vocher", MessageBoxButtons.YesNo);
+
+            if (result == DialogResult.Yes)
+            {
+                try
+                {
+                    var ten = txtmavc.Text;
+                    var phantramgiam = Convert.ToInt32(txtphantramvc.Text);
+
+                    DateTime ngaydangki;
+                    if (!DateTime.TryParse(dtptuvc.Value.ToString(), out ngaydangki))
+                    {
+                        MessageBox.Show("Ngày đăng ký không hợp lệ.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    DateTime ngayketthuc;
+                    if (!DateTime.TryParse(dtpdenvc.Value.ToString(), out ngayketthuc))
+                    {
+                        MessageBox.Show("Ngày đăng ký không hợp lệ.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+                    var toithieu = Convert.ToDouble(txtgiatrivc.Text);
+                    var phamvi = txtphamvi.Text;
+
+
+
+                    var dangthem = new MaGiamGium
+                    {
+                        GiamGia = ten,
+                        PhamTramGiam = phantramgiam,
+                        HieuLucTu = ngaydangki,
+                        HieuLucDen = ngayketthuc,
+                        GiaTriDonHangToiThieu = toithieu,
+                        PhamViSuDung = phamvi,
+
+                    };
+
+                    vocherBLL.CNThem(dangthem);
+
+                    GetloadCaiDatvocher();
+
+
+                    MessageBox.Show("Thêm thành công!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Đã xảy ra lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void dgvvocher_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            DataGridViewRow chon = dgvvocher.Rows[e.RowIndex];
+            txtidvc.Text = chon.Cells[0].Value.ToString();
+            txtmavc.Text = chon.Cells[1].Value.ToString();
+            txtphantramvc.Text = chon.Cells[2].Value.ToString();
+            dtptuvc.Text = chon.Cells[3].Value.ToString();
+            dtpdenvc.Text = chon.Cells[4].Value.ToString();
+            txtgiatrivc.Text = chon.Cells[5].Value.ToString();
+            txtphamvi.Text = chon.Cells[6].Value.ToString();
+            dangchon = e.RowIndex;
+        }
+
+        private void btnsuavc_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Bạn chắc chắn muốn sửa?", "Sửa thông tin", MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes)
+            {
+                try
+                {
+                    if (string.IsNullOrEmpty(txtidvc.Text))
+                    {
+                        MessageBox.Show("Vui lòng chọn mã giảm giá để sửa.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    var id = Convert.ToInt32(txtidvc.Text);
+                    var ten = txtmavc.Text;
+                    var phantramgiam = Convert.ToInt32(txtphantramvc.Text);
+
+                    DateTime ngaydangki;
+                    if (!DateTime.TryParse(dtptuvc.Value.ToString(), out ngaydangki))
+                    {
+                        MessageBox.Show("Ngày hiệu lực từ không hợp lệ.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    DateTime ngayketthuc;
+                    if (!DateTime.TryParse(dtpdenvc.Value.ToString(), out ngayketthuc))
+                    {
+                        MessageBox.Show("Ngày hiệu lực đến không hợp lệ.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    var toithieu = Convert.ToDouble(txtgiatrivc.Text);
+                    var phamvi = txtphamvi.Text;
+
+                    var dangcapnhat = new MaGiamGium
+                    {
+                        IdMaGiamGia = id,
+                        GiamGia = ten,
+                        PhamTramGiam = phantramgiam,
+                        HieuLucTu = ngaydangki,
+                        HieuLucDen = ngayketthuc,
+                        GiaTriDonHangToiThieu = toithieu,
+                        PhamViSuDung = phamvi
+                    };
+
+                    vocherBLL.CNsua(dangcapnhat);
+
+                    GetloadCaiDatvocher();
+
+                    MessageBox.Show("Sửa thành công!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Đã xảy ra lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void btnxoavc_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("Bạn chắc chắn muốn xóa mã giảm giá này?", "Xóa mã giảm giá", MessageBoxButtons.YesNo);
+
+            if (result == DialogResult.Yes)
+            {
+                try
+                {
+                    if (dangchon < 0 || dangchon >= dgvvocher.Rows.Count)
+                    {
+                        MessageBox.Show("Vui lòng chọn mã giảm giá cần xóa.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    var selectedRow = dgvvocher.Rows[dangchon];
+                    int id;
+                    if (!int.TryParse(selectedRow.Cells[0].Value.ToString(), out id))
+                    {
+                        MessageBox.Show("ID không hợp lệ hoặc không có giá trị.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        return;
+                    }
+
+                    vocherBLL.CNXoa(id);
+
+                    GetloadCaiDatvocher();
+
+                    MessageBox.Show("Xóa thành công!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Đã xảy ra lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+
+        private void btnressetvc_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                txtidvc.Text = "";
+                txtmavc.Text = "";
+                txtphantramvc.Text = "";
+                txtgiatrivc.Text = "";
+                txtphamvi.Text = "";
+
+                dtptuvc.Value = DateTime.Now;
+                dtpdenvc.Value = DateTime.Now;
+                MessageBox.Show("Đã làm mới tất cả các trường.", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Đã xảy ra lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void txttimkiemvc_TextChanged(object sender, EventArgs e)
+        {
+            string searchValue = txttimkiemvc.Text.Trim();
+
+            List<MaGiamGium> result;
+
+            if (int.TryParse(searchValue, out int id))
+            {
+                result = vocherBLL.TimKiemid(searchValue);
+            }
+            else
+            {
+                result = vocherBLL.TimKiem(searchValue);
+            }
+
+            dtvc.Rows.Clear();
+            foreach (var item in result)
+            {
+                DataRow dr = dtvc.NewRow();
+                dr["ID"] = item.IdMaGiamGia;
+                dr["Tên Mã"] = item.GiamGia;
+                dr["Phần Trăm Giảm"] = item.PhamTramGiam;
+                dr["Hiệu Lực Từ"] = item.HieuLucTu;
+                dr["Hiệu Lực Đến"] = item.HieuLucDen;
+                dr["Đơn Hàng Tối Thiểu"] = item.GiaTriDonHangToiThieu;
+                dr["Phạm Vi Sử Dụng"] = item.PhamViSuDung;
+
+                dtvc.Rows.Add(dr);
+            }
+
+            dgvvocher.DataSource = dtvc;
         }
 
 

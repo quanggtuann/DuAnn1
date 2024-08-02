@@ -67,6 +67,28 @@
             label1 = new Label();
             hoadon = new Panel();
             label12 = new Label();
+            vocher = new Panel();
+            label40 = new Label();
+            txttimkiemvc = new TextBox();
+            btnressetvc = new Button();
+            btnxoavc = new Button();
+            btnsuavc = new Button();
+            btnthemvc = new Button();
+            txtmavc = new TextBox();
+            txtphantramvc = new TextBox();
+            txtgiatrivc = new TextBox();
+            txtphamvi = new TextBox();
+            txtidvc = new TextBox();
+            dtpdenvc = new DateTimePicker();
+            dtptuvc = new DateTimePicker();
+            label39 = new Label();
+            label33 = new Label();
+            label38 = new Label();
+            label37 = new Label();
+            label36 = new Label();
+            label35 = new Label();
+            label34 = new Label();
+            dgvvocher = new DataGridView();
             khachhang = new Panel();
             Reset = new Button();
             label23 = new Label();
@@ -131,6 +153,8 @@
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvsanpham).BeginInit();
             hoadon.SuspendLayout();
+            vocher.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvvocher).BeginInit();
             khachhang.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvkhachhang).BeginInit();
             groupBox2.SuspendLayout();
@@ -555,6 +579,225 @@
             label12.Size = new Size(64, 20);
             label12.TabIndex = 0;
             label12.Text = "hóa đơn";
+            // 
+            // vocher
+            // 
+            vocher.Controls.Add(label40);
+            vocher.Controls.Add(txttimkiemvc);
+            vocher.Controls.Add(btnressetvc);
+            vocher.Controls.Add(btnxoavc);
+            vocher.Controls.Add(btnsuavc);
+            vocher.Controls.Add(btnthemvc);
+            vocher.Controls.Add(txtmavc);
+            vocher.Controls.Add(txtphantramvc);
+            vocher.Controls.Add(txtgiatrivc);
+            vocher.Controls.Add(txtphamvi);
+            vocher.Controls.Add(txtidvc);
+            vocher.Controls.Add(dtpdenvc);
+            vocher.Controls.Add(dtptuvc);
+            vocher.Controls.Add(label39);
+            vocher.Controls.Add(label33);
+            vocher.Controls.Add(label38);
+            vocher.Controls.Add(label37);
+            vocher.Controls.Add(label36);
+            vocher.Controls.Add(label35);
+            vocher.Controls.Add(label34);
+            vocher.Controls.Add(dgvvocher);
+            vocher.Location = new Point(2, 104);
+            vocher.Name = "vocher";
+            vocher.Size = new Size(1470, 669);
+            vocher.TabIndex = 28;
+            vocher.Paint += vocher_Paint;
+            // 
+            // label40
+            // 
+            label40.AutoSize = true;
+            label40.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label40.Location = new Point(83, 198);
+            label40.Name = "label40";
+            label40.Size = new Size(84, 20);
+            label40.TabIndex = 21;
+            label40.Text = "Tìm Kiếm :";
+            // 
+            // txttimkiemvc
+            // 
+            txttimkiemvc.Location = new Point(202, 200);
+            txttimkiemvc.Name = "txttimkiemvc";
+            txttimkiemvc.Size = new Size(301, 27);
+            txttimkiemvc.TabIndex = 20;
+            txttimkiemvc.TextChanged += txttimkiemvc_TextChanged;
+            // 
+            // btnressetvc
+            // 
+            btnressetvc.Location = new Point(1063, 198);
+            btnressetvc.Name = "btnressetvc";
+            btnressetvc.Size = new Size(94, 29);
+            btnressetvc.TabIndex = 19;
+            btnressetvc.Text = "Reset";
+            btnressetvc.UseVisualStyleBackColor = true;
+            btnressetvc.Click += btnressetvc_Click;
+            // 
+            // btnxoavc
+            // 
+            btnxoavc.Location = new Point(946, 198);
+            btnxoavc.Name = "btnxoavc";
+            btnxoavc.Size = new Size(94, 29);
+            btnxoavc.TabIndex = 18;
+            btnxoavc.Text = "Delete";
+            btnxoavc.UseVisualStyleBackColor = true;
+            btnxoavc.Click += btnxoavc_Click;
+            // 
+            // btnsuavc
+            // 
+            btnsuavc.Location = new Point(817, 198);
+            btnsuavc.Name = "btnsuavc";
+            btnsuavc.Size = new Size(94, 29);
+            btnsuavc.TabIndex = 17;
+            btnsuavc.Text = "Update";
+            btnsuavc.UseVisualStyleBackColor = true;
+            btnsuavc.Click += btnsuavc_Click;
+            // 
+            // btnthemvc
+            // 
+            btnthemvc.Location = new Point(681, 198);
+            btnthemvc.Name = "btnthemvc";
+            btnthemvc.Size = new Size(94, 29);
+            btnthemvc.TabIndex = 16;
+            btnthemvc.Text = "Add";
+            btnthemvc.UseVisualStyleBackColor = true;
+            btnthemvc.Click += btnthemvc_Click;
+            // 
+            // txtmavc
+            // 
+            txtmavc.Location = new Point(202, 83);
+            txtmavc.Name = "txtmavc";
+            txtmavc.Size = new Size(301, 27);
+            txtmavc.TabIndex = 15;
+            // 
+            // txtphantramvc
+            // 
+            txtphantramvc.Location = new Point(202, 144);
+            txtphantramvc.Name = "txtphantramvc";
+            txtphantramvc.Size = new Size(301, 27);
+            txtphantramvc.TabIndex = 14;
+            // 
+            // txtgiatrivc
+            // 
+            txtgiatrivc.Location = new Point(670, 28);
+            txtgiatrivc.Name = "txtgiatrivc";
+            txtgiatrivc.Size = new Size(301, 27);
+            txtgiatrivc.TabIndex = 13;
+            // 
+            // txtphamvi
+            // 
+            txtphamvi.Location = new Point(1106, 29);
+            txtphamvi.Name = "txtphamvi";
+            txtphamvi.Size = new Size(301, 27);
+            txtphamvi.TabIndex = 12;
+            // 
+            // txtidvc
+            // 
+            txtidvc.Location = new Point(202, 29);
+            txtidvc.Name = "txtidvc";
+            txtidvc.ReadOnly = true;
+            txtidvc.Size = new Size(301, 27);
+            txtidvc.TabIndex = 11;
+            // 
+            // dtpdenvc
+            // 
+            dtpdenvc.Location = new Point(670, 137);
+            dtpdenvc.Name = "dtpdenvc";
+            dtpdenvc.Size = new Size(250, 27);
+            dtpdenvc.TabIndex = 10;
+            // 
+            // dtptuvc
+            // 
+            dtptuvc.Location = new Point(670, 89);
+            dtptuvc.Name = "dtptuvc";
+            dtptuvc.Size = new Size(250, 27);
+            dtptuvc.TabIndex = 9;
+            // 
+            // label39
+            // 
+            label39.AutoSize = true;
+            label39.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label39.Location = new Point(1023, 31);
+            label39.Name = "label39";
+            label39.Size = new Size(75, 20);
+            label39.TabIndex = 8;
+            label39.Text = "Phạm Vi :";
+            // 
+            // label33
+            // 
+            label33.AutoSize = true;
+            label33.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label33.Location = new Point(547, 144);
+            label33.Name = "label33";
+            label33.Size = new Size(110, 20);
+            label33.TabIndex = 7;
+            label33.Text = "Hiệu Lực Đến :";
+            // 
+            // label38
+            // 
+            label38.AutoSize = true;
+            label38.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label38.Location = new Point(547, 94);
+            label38.Name = "label38";
+            label38.Size = new Size(101, 20);
+            label38.TabIndex = 6;
+            label38.Text = "Hiệu Lực Từ :";
+            // 
+            // label37
+            // 
+            label37.AutoSize = true;
+            label37.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label37.Location = new Point(547, 31);
+            label37.Name = "label37";
+            label37.Size = new Size(127, 20);
+            label37.TabIndex = 5;
+            label37.Text = "Giá trị tối thiểu : ";
+            // 
+            // label36
+            // 
+            label36.AutoSize = true;
+            label36.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label36.Location = new Point(75, 148);
+            label36.Name = "label36";
+            label36.Size = new Size(129, 20);
+            label36.TabIndex = 4;
+            label36.Text = "Phần trăm giảm :";
+            // 
+            // label35
+            // 
+            label35.AutoSize = true;
+            label35.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label35.Location = new Point(79, 90);
+            label35.Name = "label35";
+            label35.Size = new Size(68, 20);
+            label35.TabIndex = 3;
+            label35.Text = "Tên Mã :";
+            // 
+            // label34
+            // 
+            label34.AutoSize = true;
+            label34.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point);
+            label34.Location = new Point(83, 31);
+            label34.Name = "label34";
+            label34.Size = new Size(33, 20);
+            label34.TabIndex = 2;
+            label34.Text = "ID :";
+            // 
+            // dgvvocher
+            // 
+            dgvvocher.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvvocher.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvvocher.Location = new Point(14, 233);
+            dgvvocher.Name = "dgvvocher";
+            dgvvocher.RowHeadersWidth = 51;
+            dgvvocher.RowTemplate.Height = 29;
+            dgvvocher.Size = new Size(1438, 426);
+            dgvvocher.TabIndex = 1;
+            dgvvocher.CellClick += dgvvocher_CellClick;
             // 
             // khachhang
             // 
@@ -1160,8 +1403,8 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.GradientActiveCaption;
             ClientSize = new Size(1484, 775);
-            Controls.Add(nhanvien);
             Controls.Add(btnkhachhang);
+            Controls.Add(vocher);
             Controls.Add(btnnhanvien);
             Controls.Add(btndichvu);
             Controls.Add(btnvocher);
@@ -1169,9 +1412,10 @@
             Controls.Add(btnhoadon);
             Controls.Add(btnsanpham);
             Controls.Add(logo);
+            Controls.Add(hoadon);
+            Controls.Add(nhanvien);
             Controls.Add(khachhang);
             Controls.Add(sanpham);
-            Controls.Add(hoadon);
             Name = "Form1";
             Text = "Form1";
             Load += Form1_Load;
@@ -1181,6 +1425,9 @@
             ((System.ComponentModel.ISupportInitialize)dgvsanpham).EndInit();
             hoadon.ResumeLayout(false);
             hoadon.PerformLayout();
+            vocher.ResumeLayout(false);
+            vocher.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvvocher).EndInit();
             khachhang.ResumeLayout(false);
             khachhang.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvkhachhang).EndInit();
@@ -1295,5 +1542,27 @@
         private RadioButton rdolam;
         private Label la;
         private Button btnnghiviec;
+        private Panel vocher;
+        private DataGridView dgvvocher;
+        private TextBox txtmavc;
+        private TextBox txtphantramvc;
+        private TextBox txtgiatrivc;
+        private TextBox txtphamvi;
+        private TextBox txtidvc;
+        private DateTimePicker dtpdenvc;
+        private DateTimePicker dtptuvc;
+        private Label label39;
+        private Label label33;
+        private Label label38;
+        private Label label37;
+        private Label label36;
+        private Label label35;
+        private Label label34;
+        private Label label40;
+        private TextBox txttimkiemvc;
+        private Button btnressetvc;
+        private Button btnxoavc;
+        private Button btnsuavc;
+        private Button btnthemvc;
     }
 }
