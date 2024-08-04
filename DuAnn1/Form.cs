@@ -1,24 +1,46 @@
 ﻿using BLL;
-using DAL;
 using DTO.Models;
-using Microsoft.VisualBasic.Devices;
 using System.Data;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TaskbarClock;
-using System.Runtime.InteropServices;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
-using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.StartPanel;
 
 namespace DuAnn1
 {
-    public partial class Form1 : Form
+    public partial class Form : System.Windows.Forms.Form
     {
-
-        public Form1()
+        public Form()
         {
             InitializeComponent();
-            MouseDown += new MouseEventHandler(Form1_MouseDown);
+            Clock.Start();
+        }
+        public void Clock_Tick(object sender, EventArgs e)
+        {
+            Time.Text = GetFormattedDateTime();
+        }
+        private string GetFormattedDateTime()
+        {
+            DateTime now = DateTime.Now;
+            string daySuffix = GetDaySuffix(now.Day);
+            return now.ToString($"hh:mm:ss tt\nMMMM d'{daySuffix}', yyyy");
+        }
+        private string GetDaySuffix(int day)
+        {
+            if (day >= 11 && day <= 13)
+            {
+                return "th";
+            }
+            switch (day % 10)
+            {
+                case 1:
+                    return "st";
 
+                case 2:
+                    return "nd";
+
+                case 3:
+                    return "rd";
+
+                default:
+                    return "th";
+            }
         }
         private void Close_Click(object sender, EventArgs e)
         {
@@ -32,28 +54,8 @@ namespace DuAnn1
             WindowState = FormWindowState.Minimized;
         }
 
-        public const int WM_NCLBUTTONDOWN = 0xA1;
-        public const int HT_CAPTION = 0x2;
-        [DllImport("User32.dll")]
-        public static extern bool ReleaseCapture();
-        [DllImport("User32.dll")]
-        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
-
-        private void Form1_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                ReleaseCapture();
-                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
-            }
-        }
-
         SanphamBLL sanphamBLL = new SanphamBLL();
         DataTable dt = new DataTable();
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
 
         private void btnshow_Click(object sender, EventArgs e)
         {
@@ -94,7 +96,6 @@ namespace DuAnn1
             }
         }
 
-
         private void btnadd_Click(object sender, EventArgs e)
         {
             DialogResult result = MessageBox.Show("bạn chắc chắn muốn thêm", "Thêm sản phẩm", MessageBoxButtons.YesNo);
@@ -122,17 +123,10 @@ namespace DuAnn1
                 sanphamBLL.CNThem(dangthem);
                 Getcaidat();
             }
-
-        }
-
-        private void groupBox1_Enter(object sender, EventArgs e)
-        {
-
         }
 
         private void ShowPanel(Control panelToShow)
         {
-
             sanpham.Visible = false;
             hoadon.Visible = false;
             khachhang.Visible = false;
@@ -193,7 +187,6 @@ namespace DuAnn1
         private int dangchon;
         private void btnupdate_Click(object sender, EventArgs e)
         {
-
             DialogResult result = MessageBox.Show("bạn chắc chắn muốn Sửa", "Sửa sản phẩm", MessageBoxButtons.YesNo);
             if (result == DialogResult.Yes)
             {
@@ -233,7 +226,6 @@ namespace DuAnn1
 
         private void btndelete_Click(object sender, EventArgs e)
         {
-
             DialogResult result = MessageBox.Show("bạn chắc chắn muốn xóa", "Xóa sản phẩm", MessageBoxButtons.YesNo);
             if (result == DialogResult.Yes)
             {
@@ -281,12 +273,6 @@ namespace DuAnn1
             }
 
             dgvsanpham.DataSource = dt;
-
-        }
-
-        private void label13_Click(object sender, EventArgs e)
-        {
-
         }
 
         KhachhangBLL khachhangbll = new KhachhangBLL();
@@ -378,11 +364,6 @@ namespace DuAnn1
             }
         }
 
-        private void dgvkhachhang_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
         private void khachhang_Paint(object sender, PaintEventArgs e)
         {
             Getloadbangkh();
@@ -441,7 +422,6 @@ namespace DuAnn1
                 MessageBox.Show("Sửa thành công");
             }
         }
-
 
         private void dgvkhachhang_CellClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -508,7 +488,6 @@ namespace DuAnn1
 
         private void Reset_Click(object sender, EventArgs e)
         {
-
             txtkhachhang.Text = "";
             txthoten.Text = "";
             txtemail.Text = "";
@@ -518,8 +497,6 @@ namespace DuAnn1
             txtquocgia.Text = "";
             txtghichu.Text = "";
             dtpngaydangki.Value = DateTime.Now;
-
-
         }
 
         NhanvienBLL nhanvienBLL = new NhanvienBLL();
@@ -559,15 +536,6 @@ namespace DuAnn1
                 dr["Trạng Thái"] = nv.Trangthai;
                 dtnv.Rows.Add(dr);
             }
-        }
-
-
-
-
-
-        private void groupBox3_Enter(object sender, EventArgs e)
-        {
-
         }
 
         private void nhanvien_Paint(object sender, PaintEventArgs e)
@@ -618,7 +586,6 @@ namespace DuAnn1
                     }
                     else rdonghi.Checked = true;
 
-
                     var dangthem = new NhanVien
                     {
                         HoTen = ten,
@@ -636,7 +603,6 @@ namespace DuAnn1
 
                     GetloadCaiDatnv();
 
-
                     MessageBox.Show("Thêm thành công!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
                 catch (Exception ex)
@@ -644,14 +610,6 @@ namespace DuAnn1
                     MessageBox.Show($"Đã xảy ra lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
-
-        }
-
-
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-
         }
 
         private void btnsuanv_Click(object sender, EventArgs e)
@@ -703,11 +661,8 @@ namespace DuAnn1
             }
         }
 
-
-
         private void dgvnhanvien_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-
             DataGridViewRow chon = dgvnhanvien.Rows[e.RowIndex];
             txtid.Text = chon.Cells[0].Value.ToString();
             txtnhanvien.Text = chon.Cells[1].Value.ToString();
@@ -728,7 +683,6 @@ namespace DuAnn1
             if (trangthai == true)
             {
                 rdolam.Checked = true;
-
             }
             else rdonghi.Checked = true;
             dangchon = e.RowIndex;
@@ -760,11 +714,6 @@ namespace DuAnn1
             txtcccd.Text = "";
             rdolam.Checked = false;
             dtpngaybatdaulam.Value = DateTime.Now;
-        }
-
-        private void label33_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void btnnghiviec_Click(object sender, EventArgs e)
@@ -829,7 +778,6 @@ namespace DuAnn1
             dgvvocher.DataSource = dtvc;
         }
 
-
         public void GetloadCaiDatvocher()
         {
             dtvc.Rows.Clear();
@@ -876,8 +824,6 @@ namespace DuAnn1
                     var toithieu = Convert.ToDouble(txtgiatrivc.Text);
                     var phamvi = txtphamvi.Text;
 
-
-
                     var dangthem = new MaGiamGium
                     {
                         GiamGia = ten,
@@ -886,13 +832,11 @@ namespace DuAnn1
                         HieuLucDen = ngayketthuc,
                         GiaTriDonHangToiThieu = toithieu,
                         PhamViSuDung = phamvi,
-
                     };
 
                     vocherBLL.CNThem(dangthem);
 
                     GetloadCaiDatvocher();
-
 
                     MessageBox.Show("Thêm thành công!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -1009,7 +953,6 @@ namespace DuAnn1
             }
         }
 
-
         private void btnressetvc_Click(object sender, EventArgs e)
         {
             try
@@ -1079,10 +1022,6 @@ namespace DuAnn1
                 cbbidsanpham.Items.Clear();
                 LoadSanPhamToComboBox();
             }
-
-
-
-
         }
 
         private void Getloaddichvu()
@@ -1127,7 +1066,6 @@ namespace DuAnn1
 
                 dtdv.Rows.Add(dr);
             }
-
         }
         private void LoadSanPhamToComboBox()
         {
@@ -1138,10 +1076,6 @@ namespace DuAnn1
                 cbbidsanpham.Items.Add(id);
             }
         }
-
-
-
-
 
         private void btnthemdichvu_Click(object sender, EventArgs e)
         {
@@ -1279,9 +1213,155 @@ namespace DuAnn1
             dangchon = e.RowIndex;
         }
 
-        private void btnsuadichvu_Click(object sender, EventArgs e)
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-           
+            DataGridViewRow chon = dataGridView1.Rows[e.RowIndex];
+            txtsanpham.Text = chon.Cells[0].Value.ToString();
+            txtten.Text = chon.Cells[1].Value.ToString();
+            txtthuonghieu.Text = chon.Cells[2].Value.ToString();
+            txtbonho.Text = chon.Cells[3].Value.ToString();
+            txtocung.Text = chon.Cells[4].Value.ToString();
+            txtcardohoa.Text = chon.Cells[5].Value.ToString();
+            txthedieuhanh.Text = chon.Cells[6].Value.ToString();
+            txtgiaban.Text = chon.Cells[7].Value.ToString();
+            txtsoluong.Text = chon.Cells[8].Value.ToString();
+            dangchon = e.RowIndex;
+        }
+        HoaDonBLL hoaDonBLL = new HoaDonBLL();
+        private void button1_Click(object sender, EventArgs e)
+        {
+            GetloadbangHoaDOn();
+            GetcaidatHoaDon();
+        }
+        public void GetloadbangHoaDOn()
+        {
+            dt.Columns.Add("ID HoaDon", typeof(int));
+            dt.Columns.Add("ID NhanVien", typeof(int));
+            dt.Columns.Add("ID KhachHang", typeof(int));
+            dt.Columns.Add("ID SanPham", typeof(int));
+            dt.Columns.Add("ID ChiTiet", typeof(int));
+            dt.Columns.Add("Ngay Tao", typeof(DateTime));
+            dt.Columns.Add("Trang Thai", typeof(string));
+            dt.Columns.Add("Thanh Tien", typeof(int));
+            dt.Columns.Add("Ghi Chu", typeof(string));
+            dataGridView1.DataSource = dt;
+        }
+        public void GetcaidatHoaDon()
+        {
+            dt.Rows.Clear();
+
+            foreach (var item in hoaDonBLL.GetlistHoadon())
+            {
+                DataRow dr = dt.NewRow();
+                dr["ID HoaDon"] = item.IdHoaDon;
+                dr["ID NhanVien"] = item.IdNhanVien;
+                dr["ID KhachHang"] = item.IdKhachHang;
+                dr["ID SanPham"] = item.IdSanPham;
+                dr["ID ChiTiet"] = item.IdChiTiet;
+                dr["Ngay Tao"] = item.NgayTao;
+                dr["Trang Thai"] = item.TrangThai;
+                dr["Thanh Tien"] = item.ThanhTien;
+                dr["Ghi Chu"] = item.GhiChu;
+
+                dt.Rows.Add(dr);
+            }
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("bạn chắc chắn muốn thêm", "Thêm Hóa Đơn", MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes)
+            {
+                DialogResult tb = MessageBox.Show("thêm thành công", "", MessageBoxButtons.OK);
+                var IDhoadon = ID_HoaDon.Text;
+                var IDnhanvien = ID_NhanVien.Text;
+                var IDkhachhang = ID_KhachHang.Text;
+                var IDsanpham = ID_SanPham.Text;
+                var IDchitiet = ID_ChiTiet.Text;
+                var datecreated = Date_Created.Text;
+                var status = Status.Text;
+                var money = Money.Text;
+                var essay = Essay.Text;
+
+                var item = new HoaDon();
+                item.IdHoaDon = Convert.ToInt32(IDhoadon);
+                item.IdNhanVien = Convert.ToInt32(IDnhanvien);
+                item.IdKhachHang = Convert.ToInt32(IDkhachhang);
+                item.IdSanPham = Convert.ToInt32(IDsanpham);
+                item.IdChiTiet = Convert.ToInt32(IDchitiet);
+                item.NgayTao = DateTime.Now;
+                item.TrangThai = status;
+                item.ThanhTien = Convert.ToInt32(money);
+                item.GhiChu = essay;
+                hoaDonBLL.CNThem(item);
+                GetcaidatHoaDon();
+            }
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("bạn chắc chắn muốn Sửa", "Sửa sản phẩm", MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes)
+            {
+                DialogResult tb = MessageBox.Show("Sửa thành công", "", MessageBoxButtons.OK);
+                DataRow dr = dt.Rows[dangchon];
+
+                dr["ID HoaDon"] = ID_HoaDon.Text;
+                dr["ID NhanVien"] = ID_NhanVien.Text;
+                dr["ID KhachHang"] = ID_KhachHang.Text;
+                dr["ID SanPham"] = ID_SanPham.Text;
+                dr["ID ChiTiet"] = ID_ChiTiet.Text;
+                dr["Ngay Tao"] = Date_Created.Text;
+                dr["Trang Thai"] = Status.Text;
+                dr["Thanh Tien"] = Money.Text;
+                dr["Ghi Chu"] = Essay.Text;
+
+                var update = new HoaDon();
+                update.IdHoaDon = Convert.ToInt32(ID_HoaDon.Text);
+                update.IdNhanVien = Convert.ToInt32(ID_NhanVien.Text);
+                update.IdKhachHang = Convert.ToInt32(ID_KhachHang.Text);
+                update.IdSanPham = Convert.ToInt32(ID_SanPham.Text);
+                update.IdChiTiet = Convert.ToInt32(ID_ChiTiet.Text);
+                update.TrangThai = Status.Text;
+                update.ThanhTien = Convert.ToInt32(Money.Text);
+                update.GhiChu = Essay.Text;
+                hoaDonBLL.CNsua(update);
+
+                dr["ID HoaDon"] = update.IdHoaDon;
+                dr["ID NhanVien"] = update.IdNhanVien;
+                dr["ID KhachHang"] = update.IdKhachHang;
+                dr["ID SanPham"] = update.IdSanPham;
+                dr["ID ChiTiet"] = update.IdChiTiet;
+                dr["Ngay Tao"] = update.NgayTao;
+                dr["Trang Thai"] = update.TrangThai;
+                dr["Thanh Tien"] = update.ThanhTien;
+                dr["Ghi Chu"] = update.GhiChu;
+            }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            DialogResult result = MessageBox.Show("bạn chắc chắn muốn xóa", "Xóa sản phẩm", MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes)
+            {
+                DialogResult tb = MessageBox.Show("Xóa thành công", "", MessageBoxButtons.OK);
+                var Id = Convert.ToInt32(dt.Rows[dangchon]["ID HoaDon"]);
+                hoaDonBLL.CNXoa(Id);
+                GetcaidatHoaDon();
+            }
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            ID_HoaDon.Text = "";
+            ID_NhanVien.Text = "";
+            ID_KhachHang.Text = "";
+            ID_SanPham.Text = "";
+            ID_ChiTiet.Text = "";
+            Date_Created.Text = "";
+            Status.Text = "";
+            Money.Text = "";
+            Essay.Text = "";
         }
     }
 }

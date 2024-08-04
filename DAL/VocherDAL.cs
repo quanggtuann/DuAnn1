@@ -1,9 +1,4 @@
 ﻿using DTO.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DAL
 {
@@ -47,7 +42,7 @@ namespace DAL
                 vochers.HieuLucTu = vocher.HieuLucDen;
                 vochers.GiaTriDonHangToiThieu = vocher.GiaTriDonHangToiThieu;
                 vochers.PhamViSuDung = vocher.PhamViSuDung;
-              
+
                 _context.SaveChanges();
             }
         }
@@ -61,6 +56,5 @@ namespace DAL
                 _context.SaveChanges();
             }
         }
-     
     }
 }

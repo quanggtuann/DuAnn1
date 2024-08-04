@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace DTO.Models
 {
@@ -36,7 +33,7 @@ namespace DTO.Models
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseSqlServer("Server=LAPTOP-6F007S99;Database=Duan1;User Id=SA;Password=12345;");
+                optionsBuilder.UseSqlServer("Server=.\\SQLEXPRESS;Database=Duan1;Trusted_Connection=True;TrustServerCertificate=true;");
             }
         }
 
@@ -45,7 +42,7 @@ namespace DTO.Models
             modelBuilder.Entity<BanPhim>(entity =>
             {
                 entity.HasKey(e => e.IdBanphim)
-                    .HasName("PK__BanPhim__87129051728EE7F5");
+                    .HasName("PK__BanPhim__87129051E8A31AF1");
 
                 entity.ToTable("BanPhim");
 
@@ -59,7 +56,7 @@ namespace DTO.Models
             modelBuilder.Entity<ChinhSachBaoHanh>(entity =>
             {
                 entity.HasKey(e => e.IdBaoHanh)
-                    .HasName("PK__ChinhSac__55EC3123563BAFD9");
+                    .HasName("PK__ChinhSac__55EC312396CA23E4");
 
                 entity.ToTable("ChinhSachBaoHanh");
 
@@ -89,7 +86,7 @@ namespace DTO.Models
             modelBuilder.Entity<Chuot>(entity =>
             {
                 entity.HasKey(e => e.IdChuot)
-                    .HasName("PK__Chuot__CBB4C97D97827816");
+                    .HasName("PK__Chuot__CBB4C97D85E0BC6B");
 
                 entity.ToTable("Chuot");
 
@@ -107,7 +104,7 @@ namespace DTO.Models
             modelBuilder.Entity<DichVu>(entity =>
             {
                 entity.HasKey(e => e.IdDichVu)
-                    .HasName("PK__DichVu__6C465C9F400ED0EC");
+                    .HasName("PK__DichVu__6C465C9F0258EC66");
 
                 entity.ToTable("DichVu");
 
@@ -141,7 +138,7 @@ namespace DTO.Models
             modelBuilder.Entity<HangSanXuat>(entity =>
             {
                 entity.HasKey(e => e.IdHangSanXuat)
-                    .HasName("PK__HangSanX__434B02836DC8A20E");
+                    .HasName("PK__HangSanX__434B02833F8A1753");
 
                 entity.ToTable("HangSanXuat");
 
@@ -181,7 +178,7 @@ namespace DTO.Models
             modelBuilder.Entity<HoaDon>(entity =>
             {
                 entity.HasKey(e => e.IdHoaDon)
-                    .HasName("PK__HoaDon__14AFCFC5702B15BA");
+                    .HasName("PK__HoaDon__14AFCFC5E028E1E4");
 
                 entity.ToTable("HoaDon");
 
@@ -231,7 +228,7 @@ namespace DTO.Models
             modelBuilder.Entity<HoaDonChiTiet>(entity =>
             {
                 entity.HasKey(e => e.IdChiTiet)
-                    .HasName("PK__HoaDonCh__1EF2F7050C109601");
+                    .HasName("PK__HoaDonCh__1EF2F705DF87694A");
 
                 entity.ToTable("HoaDonChiTiet");
 
@@ -259,7 +256,7 @@ namespace DTO.Models
             modelBuilder.Entity<KhachHang>(entity =>
             {
                 entity.HasKey(e => e.IdKhachHang)
-                    .HasName("PK__KhachHan__263C4E857635C071");
+                    .HasName("PK__KhachHan__263C4E85D12C2B29");
 
                 entity.ToTable("KhachHang");
 
@@ -287,7 +284,7 @@ namespace DTO.Models
             modelBuilder.Entity<MaGiamGium>(entity =>
             {
                 entity.HasKey(e => e.IdMaGiamGia)
-                    .HasName("PK__MaGiamGi__3BDA8EB0B0A409B4");
+                    .HasName("PK__MaGiamGi__3BDA8EB0FDEB166E");
 
                 entity.Property(e => e.IdMaGiamGia).HasColumnName("ID_MaGiamGia");
 
@@ -303,11 +300,11 @@ namespace DTO.Models
             modelBuilder.Entity<NhanVien>(entity =>
             {
                 entity.HasKey(e => e.IdNhanVien)
-                    .HasName("PK__NhanVien__EF603D122E721B7C");
+                    .HasName("PK__NhanVien__EF603D1249ABAFE9");
 
                 entity.ToTable("NhanVien");
 
-                entity.HasIndex(e => e.HoTen, "UQ__NhanVien__27AEE13C86F640AB")
+                entity.HasIndex(e => e.HoTen, "UQ__NhanVien__27AEE13CAB7FF151")
                     .IsUnique();
 
                 entity.Property(e => e.IdNhanVien).HasColumnName("ID_NhanVien");
@@ -340,7 +337,7 @@ namespace DTO.Models
             modelBuilder.Entity<Sanpham>(entity =>
             {
                 entity.HasKey(e => e.IdSanpham)
-                    .HasName("PK__Sanpham__6F92EF6A1906D64E");
+                    .HasName("PK__Sanpham__6F92EF6AF56E23F0");
 
                 entity.ToTable("Sanpham");
 
@@ -396,7 +393,7 @@ namespace DTO.Models
             modelBuilder.Entity<Tainghe>(entity =>
             {
                 entity.HasKey(e => e.IdTainghe)
-                    .HasName("PK__Tainghe__8B71856AEC129777");
+                    .HasName("PK__Tainghe__8B71856A0554B0E1");
 
                 entity.ToTable("Tainghe");
 
@@ -412,7 +409,7 @@ namespace DTO.Models
             modelBuilder.Entity<ThongTinLienHe>(entity =>
             {
                 entity.HasKey(e => e.IdLienHe)
-                    .HasName("PK__ThongTin__2E67B9C57D260F72");
+                    .HasName("PK__ThongTin__2E67B9C56C3D6FF9");
 
                 entity.ToTable("ThongTinLienHe");
 
@@ -442,7 +439,7 @@ namespace DTO.Models
             modelBuilder.Entity<Xac>(entity =>
             {
                 entity.HasKey(e => e.IdXac)
-                    .HasName("PK__Xac__56263660AEEAB08A");
+                    .HasName("PK__Xac__562636600980E29F");
 
                 entity.ToTable("Xac");
 
