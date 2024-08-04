@@ -6,14 +6,14 @@ namespace DuAnn1
         ///  The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        private static void Main()
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             loginForm loginForm = new loginForm();
             if (loginForm.ShowDialog() == DialogResult.OK)
             {
-                Application.Run(new Form1());
+                Application.Run(new Form());
             }
             else
             {

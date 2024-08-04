@@ -1,7 +1,4 @@
 ﻿using DTO.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace DAL
 {
@@ -47,8 +44,8 @@ namespace DAL
                 existingNhanVien.Email = nhanVien.Email;
                 existingNhanVien.Sdt = nhanVien.Sdt;
                 existingNhanVien.Cccd = nhanVien.Cccd;
-                existingNhanVien.Gioitinh= nhanVien.Gioitinh;
-                existingNhanVien.Trangthai= nhanVien.Trangthai;
+                existingNhanVien.Gioitinh = nhanVien.Gioitinh;
+                existingNhanVien.Trangthai = nhanVien.Trangthai;
                 _context.SaveChanges();
             }
         }
@@ -62,6 +59,7 @@ namespace DAL
                 _context.SaveChanges();
             }
         }
+
         public List<NhanVien> GetNhanVienNghiViec()
         {
             return _context.NhanViens.Where(nv => nv.Trangthai == false).ToList();

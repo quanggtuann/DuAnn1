@@ -1,19 +1,9 @@
 ﻿using BLL;
-using DAL;
-using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace DuAnn1
 {
-    public partial class nhanviennghi : Form
+    public partial class nhanviennghi : System.Windows.Forms.Form
     {
         public nhanviennghi()
         {
@@ -22,10 +12,11 @@ namespace DuAnn1
 
         public void dgvnhanviennghi_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
         }
-        NhanvienBLL NhanvienBLL = new NhanvienBLL();
-        DataTable dtnv = new DataTable();
+
+        private NhanvienBLL NhanvienBLL = new NhanvienBLL();
+        private DataTable dtnv = new DataTable();
+
         private void Getloadbangnv()
         {
             dtnv.Columns.Clear();
@@ -75,15 +66,10 @@ namespace DuAnn1
 
         private void btnxoanvnghi_Click(object sender, EventArgs e)
         {
-           
         }
-
-     
 
         private void dgvnhanviennghi_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-           
         }
     }
 }
-

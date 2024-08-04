@@ -1,13 +1,11 @@
 ﻿using DAL;
 using DTO.Models;
-using System;
-using System.Collections.Generic;
 
 namespace BLL
 {
     public class DichvuBLL
     {
-        DichvuDAL dichvudal = new DichvuDAL();
+        private DichvuDAL dichvudal = new DichvuDAL();
 
         public List<int> GetListSanPhamIds()
         {

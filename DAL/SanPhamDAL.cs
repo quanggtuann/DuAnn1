@@ -1,15 +1,11 @@
 ﻿using DTO.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace DAL
 {
     public class SanPhamDAL
     {
-        Duan1Context context = new Duan1Context();
+        private Duan1Context context = new Duan1Context();
+
         public List<Sanpham> Getlist()
         {
             var sanpham = context.Sanphams.ToList();
@@ -20,16 +16,18 @@ namespace DAL
         {
             context.Sanphams.Add(them);
             context.SaveChanges();
-
         }
+
         public List<Sanpham> Getlist(string ten)
         {
             return context.Sanphams.Where(p => p.Ten.Contains(ten)).ToList();
         }
+
         public List<Sanpham> Getlistid(int id)
         {
             return context.Sanphams.Where(p => p.IdSanpham == id).ToList();
         }
+
         public void GetSuasp(Sanpham sua)
         {
             var sanpham = context.Sanphams.Find(sua.IdSanpham);
@@ -48,6 +46,7 @@ namespace DAL
                 context.SaveChanges();
             }
         }
+
         public void GetXoasp(int xoa)
         {
             try
@@ -70,6 +69,5 @@ namespace DAL
                 Console.WriteLine($"Lỗi khi xóa sản phẩm: {ex.Message}");
             }
         }
-
     }
 }
