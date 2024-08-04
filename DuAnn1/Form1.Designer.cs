@@ -89,6 +89,32 @@
             label35 = new Label();
             label34 = new Label();
             dgvvocher = new DataGridView();
+            baohanhdichvu = new Panel();
+            btnresetdichvu = new Button();
+            btnxoadichvu = new Button();
+            btnsuadichvu = new Button();
+            btnthemdichvu = new Button();
+            dgvdichvu = new DataGridView();
+            cbbloaidichvu = new ComboBox();
+            label50 = new Label();
+            dtpketthucdichvu = new DateTimePicker();
+            dtpbatdaudichvu = new DateTimePicker();
+            cbbidsanpham = new ComboBox();
+            txtthoigiandichvu = new TextBox();
+            txttendichvu = new TextBox();
+            txtmotadichvu = new TextBox();
+            txtghichudichvu = new TextBox();
+            txtgiadichvu = new TextBox();
+            txtiddichvu = new TextBox();
+            label49 = new Label();
+            label48 = new Label();
+            label47 = new Label();
+            label46 = new Label();
+            label45 = new Label();
+            label44 = new Label();
+            label43 = new Label();
+            label42 = new Label();
+            label41 = new Label();
             khachhang = new Panel();
             Reset = new Button();
             label23 = new Label();
@@ -155,6 +181,8 @@
             hoadon.SuspendLayout();
             vocher.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvvocher).BeginInit();
+            baohanhdichvu.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvdichvu).BeginInit();
             khachhang.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvkhachhang).BeginInit();
             groupBox2.SuspendLayout();
@@ -799,6 +827,253 @@
             dgvvocher.TabIndex = 1;
             dgvvocher.CellClick += dgvvocher_CellClick;
             // 
+            // baohanhdichvu
+            // 
+            baohanhdichvu.Controls.Add(btnresetdichvu);
+            baohanhdichvu.Controls.Add(btnxoadichvu);
+            baohanhdichvu.Controls.Add(btnsuadichvu);
+            baohanhdichvu.Controls.Add(btnthemdichvu);
+            baohanhdichvu.Controls.Add(dgvdichvu);
+            baohanhdichvu.Controls.Add(cbbloaidichvu);
+            baohanhdichvu.Controls.Add(label50);
+            baohanhdichvu.Controls.Add(dtpketthucdichvu);
+            baohanhdichvu.Controls.Add(dtpbatdaudichvu);
+            baohanhdichvu.Controls.Add(cbbidsanpham);
+            baohanhdichvu.Controls.Add(txtthoigiandichvu);
+            baohanhdichvu.Controls.Add(txttendichvu);
+            baohanhdichvu.Controls.Add(txtmotadichvu);
+            baohanhdichvu.Controls.Add(txtghichudichvu);
+            baohanhdichvu.Controls.Add(txtgiadichvu);
+            baohanhdichvu.Controls.Add(txtiddichvu);
+            baohanhdichvu.Controls.Add(label49);
+            baohanhdichvu.Controls.Add(label48);
+            baohanhdichvu.Controls.Add(label47);
+            baohanhdichvu.Controls.Add(label46);
+            baohanhdichvu.Controls.Add(label45);
+            baohanhdichvu.Controls.Add(label44);
+            baohanhdichvu.Controls.Add(label43);
+            baohanhdichvu.Controls.Add(label42);
+            baohanhdichvu.Controls.Add(label41);
+            baohanhdichvu.Location = new Point(2, 101);
+            baohanhdichvu.Name = "baohanhdichvu";
+            baohanhdichvu.Size = new Size(1470, 669);
+            baohanhdichvu.TabIndex = 22;
+            baohanhdichvu.Paint += baohanhdichvu_Paint;
+            // 
+            // btnresetdichvu
+            // 
+            btnresetdichvu.Location = new Point(1157, 278);
+            btnresetdichvu.Name = "btnresetdichvu";
+            btnresetdichvu.Size = new Size(94, 29);
+            btnresetdichvu.TabIndex = 25;
+            btnresetdichvu.Text = "Reset ";
+            btnresetdichvu.UseVisualStyleBackColor = true;
+            // 
+            // btnxoadichvu
+            // 
+            btnxoadichvu.Location = new Point(1023, 278);
+            btnxoadichvu.Name = "btnxoadichvu";
+            btnxoadichvu.Size = new Size(94, 29);
+            btnxoadichvu.TabIndex = 24;
+            btnxoadichvu.Text = "Delete";
+            btnxoadichvu.UseVisualStyleBackColor = true;
+            btnxoadichvu.Click += btnxoadichvu_Click;
+            // 
+            // btnsuadichvu
+            // 
+            btnsuadichvu.Location = new Point(906, 278);
+            btnsuadichvu.Name = "btnsuadichvu";
+            btnsuadichvu.Size = new Size(94, 29);
+            btnsuadichvu.TabIndex = 23;
+            btnsuadichvu.Text = "Update";
+            btnsuadichvu.UseVisualStyleBackColor = true;
+            btnsuadichvu.Click += btnsuadichvu_Click;
+            // 
+            // btnthemdichvu
+            // 
+            btnthemdichvu.Location = new Point(771, 278);
+            btnthemdichvu.Name = "btnthemdichvu";
+            btnthemdichvu.Size = new Size(94, 29);
+            btnthemdichvu.TabIndex = 22;
+            btnthemdichvu.Text = "Add";
+            btnthemdichvu.UseVisualStyleBackColor = true;
+            btnthemdichvu.Click += btnthemdichvu_Click;
+            // 
+            // dgvdichvu
+            // 
+            dgvdichvu.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dgvdichvu.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvdichvu.Location = new Point(14, 356);
+            dgvdichvu.Name = "dgvdichvu";
+            dgvdichvu.RowHeadersWidth = 51;
+            dgvdichvu.RowTemplate.Height = 29;
+            dgvdichvu.Size = new Size(1420, 306);
+            dgvdichvu.TabIndex = 21;
+            dgvdichvu.CellClick += dgvdichvu_CellClick;
+            // 
+            // cbbloaidichvu
+            // 
+            cbbloaidichvu.FormattingEnabled = true;
+            cbbloaidichvu.Location = new Point(581, 32);
+            cbbloaidichvu.Name = "cbbloaidichvu";
+            cbbloaidichvu.Size = new Size(240, 28);
+            cbbloaidichvu.TabIndex = 20;
+            // 
+            // label50
+            // 
+            label50.AutoSize = true;
+            label50.Location = new Point(66, 276);
+            label50.Name = "label50";
+            label50.Size = new Size(100, 20);
+            label50.TabIndex = 19;
+            label50.Text = "ID Sản Phẩm :";
+            // 
+            // dtpketthucdichvu
+            // 
+            dtpketthucdichvu.Location = new Point(1040, 177);
+            dtpketthucdichvu.Name = "dtpketthucdichvu";
+            dtpketthucdichvu.Size = new Size(334, 27);
+            dtpketthucdichvu.TabIndex = 18;
+            // 
+            // dtpbatdaudichvu
+            // 
+            dtpbatdaudichvu.Location = new Point(1040, 102);
+            dtpbatdaudichvu.Name = "dtpbatdaudichvu";
+            dtpbatdaudichvu.Size = new Size(334, 27);
+            dtpbatdaudichvu.TabIndex = 17;
+            // 
+            // cbbidsanpham
+            // 
+            cbbidsanpham.FormattingEnabled = true;
+            cbbidsanpham.Location = new Point(173, 273);
+            cbbidsanpham.Name = "cbbidsanpham";
+            cbbidsanpham.Size = new Size(256, 28);
+            cbbidsanpham.TabIndex = 16;
+            // 
+            // txtthoigiandichvu
+            // 
+            txtthoigiandichvu.Location = new Point(1040, 25);
+            txtthoigiandichvu.Name = "txtthoigiandichvu";
+            txtthoigiandichvu.Size = new Size(334, 27);
+            txtthoigiandichvu.TabIndex = 15;
+            // 
+            // txttendichvu
+            // 
+            txttendichvu.Location = new Point(170, 106);
+            txttendichvu.Name = "txttendichvu";
+            txttendichvu.Size = new Size(259, 27);
+            txttendichvu.TabIndex = 14;
+            // 
+            // txtmotadichvu
+            // 
+            txtmotadichvu.Location = new Point(173, 181);
+            txtmotadichvu.Name = "txtmotadichvu";
+            txtmotadichvu.Size = new Size(256, 27);
+            txtmotadichvu.TabIndex = 13;
+            // 
+            // txtghichudichvu
+            // 
+            txtghichudichvu.Location = new Point(581, 179);
+            txtghichudichvu.Name = "txtghichudichvu";
+            txtghichudichvu.Size = new Size(245, 27);
+            txtghichudichvu.TabIndex = 11;
+            // 
+            // txtgiadichvu
+            // 
+            txtgiadichvu.Location = new Point(581, 101);
+            txtgiadichvu.Name = "txtgiadichvu";
+            txtgiadichvu.Size = new Size(245, 27);
+            txtgiadichvu.TabIndex = 10;
+            // 
+            // txtiddichvu
+            // 
+            txtiddichvu.Location = new Point(170, 24);
+            txtiddichvu.Name = "txtiddichvu";
+            txtiddichvu.ReadOnly = true;
+            txtiddichvu.Size = new Size(259, 27);
+            txtiddichvu.TabIndex = 9;
+            // 
+            // label49
+            // 
+            label49.AutoSize = true;
+            label49.Location = new Point(906, 184);
+            label49.Name = "label49";
+            label49.Size = new Size(112, 20);
+            label49.TabIndex = 8;
+            label49.Text = "Ngày Kết Thúc :";
+            // 
+            // label48
+            // 
+            label48.AutoSize = true;
+            label48.Location = new Point(906, 111);
+            label48.Name = "label48";
+            label48.Size = new Size(106, 20);
+            label48.TabIndex = 7;
+            label48.Text = "Ngày Bắt đầu :";
+            // 
+            // label47
+            // 
+            label47.AutoSize = true;
+            label47.Location = new Point(914, 34);
+            label47.Name = "label47";
+            label47.Size = new Size(79, 20);
+            label47.TabIndex = 6;
+            label47.Text = "Thời Gian :";
+            // 
+            // label46
+            // 
+            label46.AutoSize = true;
+            label46.Location = new Point(474, 106);
+            label46.Name = "label46";
+            label46.Size = new Size(93, 20);
+            label46.TabIndex = 5;
+            label46.Text = "Giá Dịch Vụ :";
+            // 
+            // label45
+            // 
+            label45.AutoSize = true;
+            label45.Location = new Point(483, 183);
+            label45.Name = "label45";
+            label45.Size = new Size(71, 20);
+            label45.TabIndex = 4;
+            label45.Text = "Ghi Chú : ";
+            // 
+            // label44
+            // 
+            label44.AutoSize = true;
+            label44.Location = new Point(476, 32);
+            label44.Name = "label44";
+            label44.Size = new Size(92, 20);
+            label44.TabIndex = 3;
+            label44.Text = "loại dịch vụ :";
+            // 
+            // label43
+            // 
+            label43.AutoSize = true;
+            label43.Location = new Point(66, 184);
+            label43.Name = "label43";
+            label43.Size = new Size(55, 20);
+            label43.TabIndex = 2;
+            label43.Text = "mô tả :";
+            // 
+            // label42
+            // 
+            label42.AutoSize = true;
+            label42.Location = new Point(66, 110);
+            label42.Name = "label42";
+            label42.Size = new Size(98, 20);
+            label42.TabIndex = 1;
+            label42.Text = "Tên Dịch Vụ : ";
+            // 
+            // label41
+            // 
+            label41.AutoSize = true;
+            label41.Location = new Point(66, 31);
+            label41.Name = "label41";
+            label41.Size = new Size(31, 20);
+            label41.TabIndex = 0;
+            label41.Text = "ID :";
+            // 
             // khachhang
             // 
             khachhang.Controls.Add(Reset);
@@ -1404,7 +1679,6 @@
             BackColor = SystemColors.GradientActiveCaption;
             ClientSize = new Size(1484, 775);
             Controls.Add(btnkhachhang);
-            Controls.Add(vocher);
             Controls.Add(btnnhanvien);
             Controls.Add(btndichvu);
             Controls.Add(btnvocher);
@@ -1412,6 +1686,8 @@
             Controls.Add(btnhoadon);
             Controls.Add(btnsanpham);
             Controls.Add(logo);
+            Controls.Add(baohanhdichvu);
+            Controls.Add(vocher);
             Controls.Add(hoadon);
             Controls.Add(nhanvien);
             Controls.Add(khachhang);
@@ -1428,6 +1704,9 @@
             vocher.ResumeLayout(false);
             vocher.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvvocher).EndInit();
+            baohanhdichvu.ResumeLayout(false);
+            baohanhdichvu.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)dgvdichvu).EndInit();
             khachhang.ResumeLayout(false);
             khachhang.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dgvkhachhang).EndInit();
@@ -1564,5 +1843,31 @@
         private Button btnxoavc;
         private Button btnsuavc;
         private Button btnthemvc;
+        private Panel baohanhdichvu;
+        private Label label46;
+        private Label label45;
+        private Label label44;
+        private Label label43;
+        private Label label42;
+        private Label label41;
+        private Label label49;
+        private Label label48;
+        private Label label47;
+        private Label label50;
+        private DateTimePicker dtpketthucdichvu;
+        private DateTimePicker dtpbatdaudichvu;
+        private ComboBox cbbidsanpham;
+        private TextBox txtthoigiandichvu;
+        private TextBox txttendichvu;
+        private TextBox txtmotadichvu;
+        private TextBox txtghichudichvu;
+        private TextBox txtgiadichvu;
+        private TextBox txtiddichvu;
+        private ComboBox cbbloaidichvu;
+        private DataGridView dgvdichvu;
+        private Button btnresetdichvu;
+        private Button btnxoadichvu;
+        private Button btnsuadichvu;
+        private Button btnthemdichvu;
     }
 }

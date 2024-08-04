@@ -50,12 +50,26 @@ namespace DAL
         }
         public void GetXoasp(int xoa)
         {
-            var sanpham = context.Sanphams.Find(xoa);
-            if (sanpham != null)
+            try
             {
-                context.Sanphams.Remove(sanpham);
-                context.SaveChanges();
+                var sanpham = context.Sanphams.Find(xoa);
+
+                if (sanpham != null)
+                {
+                    context.Sanphams.Remove(sanpham);
+                    context.SaveChanges();
+                    Console.WriteLine("Sản phẩm đã được xóa thành công.");
+                }
+                else
+                {
+                    Console.WriteLine("Sản phẩm không tồn tại.");
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Lỗi khi xóa sản phẩm: {ex.Message}");
             }
         }
+
     }
 }
