@@ -1,4 +1,7 @@
-﻿namespace DTO.Models
+﻿using System;
+using System.Collections.Generic;
+
+namespace DTO.Models
 {
     public partial class NhanVien
     {

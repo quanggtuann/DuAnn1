@@ -1,4 +1,5 @@
 ﻿using BLL;
+using DAL;
 using DTO.Models;
 using System.Data;
 
@@ -1013,355 +1014,136 @@ namespace DuAnn1
         {
             Getloaddichvu();
             GetCaidatdichvu();
+          
             if (cbbloaidichvu.Items.Count == 0)
             {
                 cbbloaidichvu.Items.Add("Bảo Trì");
                 cbbloaidichvu.Items.Add("Cài Đặt");
                 cbbloaidichvu.Items.Add("Sửa Chữa");
                 cbbloaidichvu.Items.Add("Nâng Cấp");
-                cbbidsanpham.Items.Clear();
-                LoadSanPhamToComboBox();
             }
+       
         }
 
         private void Getloaddichvu()
         {
             dtdv.Columns.Clear();
             dtdv.Columns.Add("ID", typeof(int));
-            dtdv.Columns.Add("Tên Sản Phẩm", typeof(string));
+            dtdv.Columns.Add("ID Sản Phẩm", typeof(int));
             dtdv.Columns.Add("Tên Dịch Vụ", typeof(string));
             dtdv.Columns.Add("Mô tả", typeof(string));
             dtdv.Columns.Add("Loại Dịch Vụ", typeof(string));
-            dtdv.Columns.Add("Giá", typeof(int));
+            dtdv.Columns.Add("Giá Dịch Vụ", typeof(decimal));
             dtdv.Columns.Add("Thời gian", typeof(string));
             dtdv.Columns.Add("Ngày Bắt Đầu Cung cấp", typeof(DateTime));
             dtdv.Columns.Add("Ngày Kết Thúc Cung cấp", typeof(DateTime));
             dtdv.Columns.Add("Ghi Chú", typeof(string));
+            dtdv.Columns.Add("Trạng Thái", typeof(bool));
 
             dgvdichvu.DataSource = dtdv;
         }
 
-        private int selectedSanPhamId = -1;
-        public void GetCaidatdichvu()
+
+        private void GetCaidatdichvu()
         {
             dtdv.Rows.Clear();
             var nvs = dichvuBLL.Getlistdv();
-            if (selectedSanPhamId != -1)
-            {
-                nvs = nvs.Where(nv => nv.IdSanPham == selectedSanPhamId).ToList();
-            }
+
             foreach (var nv in nvs)
             {
                 DataRow dr = dtdv.NewRow();
                 dr["ID"] = nv.IdDichVu;
-                dr["Tên Sản Phẩm"] = dichvuBLL.GetSanPhamNameById(nv.IdSanPham);
+                dr["ID Sản Phẩm"] = nv.IdSanPham;
                 dr["Tên Dịch Vụ"] = nv.TenDichVu;
                 dr["Mô tả"] = nv.MoTa;
                 dr["Loại Dịch Vụ"] = nv.LoaiDichVu;
-                dr["Giá"] = nv.GiaDichVu;
+                dr["Giá Dịch Vụ"] = nv.GiaDichVu;
                 dr["Thời gian"] = nv.ThoiGianThucHien;
                 dr["Ngày Bắt Đầu Cung cấp"] = nv.NgayBatDauCungCap;
                 dr["Ngày Kết Thúc Cung cấp"] = nv.NgayKetThucCungCap;
                 dr["Ghi Chú"] = nv.GhiChu;
+                dr["Trạng Thái"] = nv.Trangthai;
 
                 dtdv.Rows.Add(dr);
             }
         }
-        private void LoadSanPhamToComboBox()
-        {
-            var sanPhamIds = dichvuBLL.GetListSanPhamIds();
-            cbbidsanpham.Items.Clear();
-            foreach (var id in sanPhamIds)
-            {
-                cbbidsanpham.Items.Add(id);
-            }
-        }
+
+
+
+
 
         private void btnthemdichvu_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Bạn chắc chắn muốn thêm?", "Thêm dịch vụ", MessageBoxButtons.YesNo);
-
-            if (result == DialogResult.Yes)
-            {
-                try
-                {
-                    var ten = txttendichvu.Text.Trim();
-                    var idsanpham = cbbidsanpham.SelectedItem?.ToString().Trim();
-                    var Mota = txtmotadichvu.Text.Trim();
-                    var loaidichvu = cbbloaidichvu.SelectedItem?.ToString().Trim();
-                    var giadichvuStr = txtgiadichvu.Text.Trim();
-                    var thoigianthuchien = txtthoigiandichvu.Text.Trim();
-
-                    MessageBox.Show($"Tên: {ten}\nID Sản Phẩm: {idsanpham}\nMô Tả: {Mota}\nLoại Dịch Vụ: {loaidichvu}\nGiá: {giadichvuStr}\nThời Gian: {thoigianthuchien}");
-
-                    if (string.IsNullOrEmpty(ten) || string.IsNullOrEmpty(idsanpham) || string.IsNullOrEmpty(Mota) || string.IsNullOrEmpty(loaidichvu) || string.IsNullOrEmpty(thoigianthuchien))
-                    {
-                        MessageBox.Show("Vui lòng điền đầy đủ thông tin.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-
-                    if (!int.TryParse(giadichvuStr, out int giadichvu))
-                    {
-                        MessageBox.Show("Giá dịch vụ không hợp lệ.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-
-                    DateTime ngaydangki = dtpbatdaudichvu.Value;
-                    DateTime ngayketthuc = dtpketthucdichvu.Value;
-
-                    var ghichu = txtghichudichvu.Text.Trim();
-
-                    var dangthem = new DichVu
-                    {
-                        TenDichVu = ten,
-                        IdSanPham = Convert.ToInt32(idsanpham),
-                        MoTa = Mota,
-                        LoaiDichVu = loaidichvu,
-                        GiaDichVu = giadichvu,
-                        ThoiGianThucHien = thoigianthuchien,
-                        NgayBatDauCungCap = ngaydangki,
-                        NgayKetThucCungCap = ngayketthuc,
-                        GhiChu = ghichu,
-                    };
-
-                    dichvuBLL.CNThem(dangthem);
-
-                    GetCaidatdichvu();
-
-                    MessageBox.Show("Thêm thành công!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Đã xảy ra lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
+           
         }
+
+
+
+
+
+
 
         private void btnxoadichvu_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("Bạn chắc chắn muốn xóa dịch vụ?", "Xóa mã dịch vụ", MessageBoxButtons.YesNo);
 
-            if (result == DialogResult.Yes)
-            {
-                try
-                {
-                    if (dangchon < 0 || dangchon >= dgvdichvu.Rows.Count)
-                    {
-                        MessageBox.Show("Vui lòng chọn dịch vụ cần xóa.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-
-                    var selectedRow = dgvdichvu.Rows[dangchon];
-                    int id;
-                    if (!int.TryParse(selectedRow.Cells[0].Value.ToString(), out id))
-                    {
-                        MessageBox.Show("ID không hợp lệ hoặc không có giá trị.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        return;
-                    }
-
-                    dichvuBLL.CNXoa(id);
-
-                    GetCaidatdichvu();
-
-                    MessageBox.Show("Xóa thành công!", "", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Đã xảy ra lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
         }
+
 
         private void dgvdichvu_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (e.RowIndex < 0 || e.RowIndex >= dgvdichvu.Rows.Count) return;
 
-            DataGridViewRow chon = dgvdichvu.Rows[e.RowIndex];
-
-            txtiddichvu.Text = chon.Cells[0].Value?.ToString();
-
-            string idSanPham = chon.Cells[1].Value?.ToString();
-            if (cbbidsanpham.Items.Contains(idSanPham))
-            {
-                cbbidsanpham.SelectedItem = idSanPham;
-            }
-            else
-            {
-                cbbidsanpham.Text = idSanPham;
-            }
-
-            txttendichvu.Text = chon.Cells[2].Value?.ToString();
-            txtmotadichvu.Text = chon.Cells[3].Value?.ToString();
-            cbbloaidichvu.Text = chon.Cells[4].Value?.ToString();
-
-            txtgiadichvu.Text = chon.Cells[5].Value?.ToString();
-
-            txtthoigiandichvu.Text = chon.Cells[6].Value?.ToString();
-
-            if (DateTime.TryParse(chon.Cells[7].Value?.ToString(), out DateTime ngayBatDau))
-            {
-                dtpbatdaudichvu.Value = ngayBatDau;
-            }
-
-            if (DateTime.TryParse(chon.Cells[8].Value?.ToString(), out DateTime ngayKetThuc))
-            {
-                dtpketthucdichvu.Value = ngayKetThuc;
-            }
-
-            txtghichudichvu.Text = chon.Cells[9].Value?.ToString();
-
-            dangchon = e.RowIndex;
         }
+
+
+
+
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-            DataGridViewRow chon = dataGridView1.Rows[e.RowIndex];
-            txtsanpham.Text = chon.Cells[0].Value.ToString();
-            txtten.Text = chon.Cells[1].Value.ToString();
-            txtthuonghieu.Text = chon.Cells[2].Value.ToString();
-            txtbonho.Text = chon.Cells[3].Value.ToString();
-            txtocung.Text = chon.Cells[4].Value.ToString();
-            txtcardohoa.Text = chon.Cells[5].Value.ToString();
-            txthedieuhanh.Text = chon.Cells[6].Value.ToString();
-            txtgiaban.Text = chon.Cells[7].Value.ToString();
-            txtsoluong.Text = chon.Cells[8].Value.ToString();
-            dangchon = e.RowIndex;
+
         }
-        HoaDonBLL hoaDonBLL = new HoaDonBLL();
         private void button1_Click(object sender, EventArgs e)
         {
-            GetloadbangHoaDOn();
-            GetcaidatHoaDon();
+
         }
         public void GetloadbangHoaDOn()
         {
-            dt.Columns.Add("ID HoaDon", typeof(int));
-            dt.Columns.Add("ID NhanVien", typeof(int));
-            dt.Columns.Add("ID KhachHang", typeof(int));
-            dt.Columns.Add("ID SanPham", typeof(int));
-            dt.Columns.Add("ID ChiTiet", typeof(int));
-            dt.Columns.Add("Ngay Tao", typeof(DateTime));
-            dt.Columns.Add("Trang Thai", typeof(string));
-            dt.Columns.Add("Thanh Tien", typeof(int));
-            dt.Columns.Add("Ghi Chu", typeof(string));
-            dataGridView1.DataSource = dt;
+
         }
         public void GetcaidatHoaDon()
         {
-            dt.Rows.Clear();
 
-            foreach (var item in hoaDonBLL.GetlistHoadon())
-            {
-                DataRow dr = dt.NewRow();
-                dr["ID HoaDon"] = item.IdHoaDon;
-                dr["ID NhanVien"] = item.IdNhanVien;
-                dr["ID KhachHang"] = item.IdKhachHang;
-                dr["ID SanPham"] = item.IdSanPham;
-                dr["ID ChiTiet"] = item.IdChiTiet;
-                dr["Ngay Tao"] = item.NgayTao;
-                dr["Trang Thai"] = item.TrangThai;
-                dr["Thanh Tien"] = item.ThanhTien;
-                dr["Ghi Chu"] = item.GhiChu;
-
-                dt.Rows.Add(dr);
-            }
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("bạn chắc chắn muốn thêm", "Thêm Hóa Đơn", MessageBoxButtons.YesNo);
-            if (result == DialogResult.Yes)
-            {
-                DialogResult tb = MessageBox.Show("thêm thành công", "", MessageBoxButtons.OK);
-                var IDhoadon = ID_HoaDon.Text;
-                var IDnhanvien = ID_NhanVien.Text;
-                var IDkhachhang = ID_KhachHang.Text;
-                var IDsanpham = ID_SanPham.Text;
-                var IDchitiet = ID_ChiTiet.Text;
-                var datecreated = Date_Created.Text;
-                var status = Status.Text;
-                var money = Money.Text;
-                var essay = Essay.Text;
 
-                var item = new HoaDon();
-                item.IdHoaDon = Convert.ToInt32(IDhoadon);
-                item.IdNhanVien = Convert.ToInt32(IDnhanvien);
-                item.IdKhachHang = Convert.ToInt32(IDkhachhang);
-                item.IdSanPham = Convert.ToInt32(IDsanpham);
-                item.IdChiTiet = Convert.ToInt32(IDchitiet);
-                item.NgayTao = DateTime.Now;
-                item.TrangThai = status;
-                item.ThanhTien = Convert.ToInt32(money);
-                item.GhiChu = essay;
-                hoaDonBLL.CNThem(item);
-                GetcaidatHoaDon();
-            }
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("bạn chắc chắn muốn Sửa", "Sửa sản phẩm", MessageBoxButtons.YesNo);
-            if (result == DialogResult.Yes)
-            {
-                DialogResult tb = MessageBox.Show("Sửa thành công", "", MessageBoxButtons.OK);
-                DataRow dr = dt.Rows[dangchon];
-
-                dr["ID HoaDon"] = ID_HoaDon.Text;
-                dr["ID NhanVien"] = ID_NhanVien.Text;
-                dr["ID KhachHang"] = ID_KhachHang.Text;
-                dr["ID SanPham"] = ID_SanPham.Text;
-                dr["ID ChiTiet"] = ID_ChiTiet.Text;
-                dr["Ngay Tao"] = Date_Created.Text;
-                dr["Trang Thai"] = Status.Text;
-                dr["Thanh Tien"] = Money.Text;
-                dr["Ghi Chu"] = Essay.Text;
-
-                var update = new HoaDon();
-                update.IdHoaDon = Convert.ToInt32(ID_HoaDon.Text);
-                update.IdNhanVien = Convert.ToInt32(ID_NhanVien.Text);
-                update.IdKhachHang = Convert.ToInt32(ID_KhachHang.Text);
-                update.IdSanPham = Convert.ToInt32(ID_SanPham.Text);
-                update.IdChiTiet = Convert.ToInt32(ID_ChiTiet.Text);
-                update.TrangThai = Status.Text;
-                update.ThanhTien = Convert.ToInt32(Money.Text);
-                update.GhiChu = Essay.Text;
-                hoaDonBLL.CNsua(update);
-
-                dr["ID HoaDon"] = update.IdHoaDon;
-                dr["ID NhanVien"] = update.IdNhanVien;
-                dr["ID KhachHang"] = update.IdKhachHang;
-                dr["ID SanPham"] = update.IdSanPham;
-                dr["ID ChiTiet"] = update.IdChiTiet;
-                dr["Ngay Tao"] = update.NgayTao;
-                dr["Trang Thai"] = update.TrangThai;
-                dr["Thanh Tien"] = update.ThanhTien;
-                dr["Ghi Chu"] = update.GhiChu;
-            }
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            DialogResult result = MessageBox.Show("bạn chắc chắn muốn xóa", "Xóa sản phẩm", MessageBoxButtons.YesNo);
-            if (result == DialogResult.Yes)
-            {
-                DialogResult tb = MessageBox.Show("Xóa thành công", "", MessageBoxButtons.OK);
-                var Id = Convert.ToInt32(dt.Rows[dangchon]["ID HoaDon"]);
-                hoaDonBLL.CNXoa(Id);
-                GetcaidatHoaDon();
-            }
+
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            ID_HoaDon.Text = "";
-            ID_NhanVien.Text = "";
-            ID_KhachHang.Text = "";
-            ID_SanPham.Text = "";
-            ID_ChiTiet.Text = "";
-            Date_Created.Text = "";
-            Status.Text = "";
-            Money.Text = "";
-            Essay.Text = "";
+
         }
+
+        private void cbbchucvu_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnsuadichvu_Click(object sender, EventArgs e)
+        {
+
+
+        }
+
     }
 }

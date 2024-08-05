@@ -7,11 +7,6 @@ namespace BLL
     {
         private DichvuDAL dichvudal = new DichvuDAL();
 
-        public List<int> GetListSanPhamIds()
-        {
-            return dichvudal.GetListSanPhamIds();
-        }
-
         public List<DichVu> Getlistdv()
         {
             return dichvudal.Getlist();
@@ -46,9 +41,6 @@ namespace BLL
             dichvudal.GetXoa(xoa);
         }
 
-        public string GetSanPhamNameById(int idSanPham)
-        {
-            return dichvudal.GetSanPhamNameById(idSanPham);
-        }
+   
     }
 }

@@ -11,11 +11,6 @@ namespace DAL
             _context = new Duan1Context();
         }
 
-        public List<int> GetListSanPhamIds()
-        {
-            return _context.Sanphams.Select(sp => sp.IdSanpham).ToList();
-        }
-
         public List<DichVu> Getlist()
         {
             return _context.DichVus.ToList();
@@ -49,7 +44,8 @@ namespace DAL
                 dichvu.ThoiGianThucHien = dichVus.ThoiGianThucHien;
                 dichvu.NgayBatDauCungCap = dichVus.NgayBatDauCungCap;
                 dichvu.NgayKetThucCungCap = dichVus.NgayKetThucCungCap;
-
+                dichvu.GhiChu = dichVus.GhiChu;
+                dichvu.Trangthai = dichVus.Trangthai;
                 _context.SaveChanges();
             }
         }
@@ -64,10 +60,7 @@ namespace DAL
             }
         }
 
-        public string GetSanPhamNameById(int idSanPham)
-        {
-            var sanPham = _context.Sanphams.Find(idSanPham);
-            return sanPham != null ? sanPham.Ten : "Không tìm thấy";
-        }
+
+       
     }
 }

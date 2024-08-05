@@ -1,4 +1,7 @@
-﻿namespace DTO.Models
+﻿using System;
+using System.Collections.Generic;
+
+namespace DTO.Models
 {
     public partial class ChinhSachBaoHanh
     {
@@ -14,7 +17,6 @@
         public string? ThoiGianBaoHanh { get; set; }
         public string? DieuKienBaoHanh { get; set; }
         public string? DieuKienTuChoiBaoHanh { get; set; }
-        public int? ThongTinLienHe { get; set; }
         public string? GhiChu { get; set; }
 
         public virtual DichVu IdDichVuNavigation { get; set; } = null!;
