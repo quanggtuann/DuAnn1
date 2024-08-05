@@ -1,5 +1,6 @@
 ﻿using DAL;
 using DTO.Models;
+using System.Dynamic;
 
 namespace BLL
 {
@@ -40,7 +41,13 @@ namespace BLL
         {
             dichvudal.GetXoa(xoa);
         }
-
-   
+        public List<Sanpham> Getlistidsanpham()
+        {
+            return dichvudal.Getlistidsanpham();
+        }
+        public string GetSanPhamNameById(int idSanPham)
+        {
+            return dichvudal.GetSanPhamNameById(idSanPham);
+        }
     }
 }

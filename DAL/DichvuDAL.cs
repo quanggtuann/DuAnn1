@@ -11,6 +11,14 @@ namespace DAL
             _context = new Duan1Context();
         }
 
+        public List<int> GetListSanPhamIds()
+        {
+            return _context.Sanphams.Select(sp => sp.IdSanpham).ToList();
+        }
+        public List<Sanpham> Getlistidsanpham()
+        {
+            return _context.Sanphams.ToList();
+        }
         public List<DichVu> Getlist()
         {
             return _context.DichVus.ToList();
@@ -60,7 +68,10 @@ namespace DAL
             }
         }
 
-
-       
+        public string GetSanPhamNameById(int idSanPham)
+        {
+            var sanPham = _context.Sanphams.Find(idSanPham);
+            return sanPham != null ? sanPham.Ten : "Không tìm thấy";
+        }
     }
 }

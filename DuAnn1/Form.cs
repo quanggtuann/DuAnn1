@@ -2,6 +2,8 @@
 using DAL;
 using DTO.Models;
 using System.Data;
+using System.Diagnostics;
+using System.Globalization;
 
 namespace DuAnn1
 {
@@ -1014,15 +1016,19 @@ namespace DuAnn1
         {
             Getloaddichvu();
             GetCaidatdichvu();
-          
+
             if (cbbloaidichvu.Items.Count == 0)
             {
                 cbbloaidichvu.Items.Add("Bảo Trì");
                 cbbloaidichvu.Items.Add("Cài Đặt");
                 cbbloaidichvu.Items.Add("Sửa Chữa");
                 cbbloaidichvu.Items.Add("Nâng Cấp");
+                foreach (var sp in dichvuBLL.Getlistidsanpham())
+                {
+                    cbbidsanpham.Items.Add(sp.IdSanpham);
+                }
             }
-       
+
         }
 
         private void Getloaddichvu()
@@ -1066,6 +1072,7 @@ namespace DuAnn1
 
                 dtdv.Rows.Add(dr);
             }
+
         }
 
 
@@ -1074,8 +1081,52 @@ namespace DuAnn1
 
         private void btnthemdichvu_Click(object sender, EventArgs e)
         {
-           
+            try
+            {
+                string tenDichVu = txttendichvu.Text.Trim();
+                string moTa = txtmotadichvu.Text.Trim();
+                string loaiDichVu = cbbloaidichvu.SelectedItem?.ToString();
+                decimal giaDichVu = decimal.TryParse(txtgiadichvu.Text.Trim(), out var gia) ? gia : 0;
+                string thoiGian = txtthoigiandichvu.Text.Trim();
+                DateTime ngayBatDau = dtpbatdaudichvu.Value;
+                DateTime ngayKetThuc = dtpketthucdichvu.Value;
+                string ghiChu = txtghichudichvu.Text.Trim();
+                bool trangThai = rdohtdv.Checked;
+
+                if (cbbidsanpham.SelectedItem is int idSanPham)
+                {
+                    var dichVuMoi = new DichVu
+                    {
+                        IdSanPham = idSanPham,
+                        TenDichVu = tenDichVu,
+                        MoTa = moTa,
+                        LoaiDichVu = loaiDichVu,
+                        GiaDichVu = giaDichVu,
+                        ThoiGianThucHien = thoiGian,
+                        NgayBatDauCungCap = ngayBatDau,
+                        NgayKetThucCungCap = ngayKetThuc,
+                        GhiChu = ghiChu,
+                        Trangthai = trangThai
+                    };
+
+                    dichvuBLL.CNThem(dichVuMoi);
+
+                    GetCaidatdichvu();
+
+                    MessageBox.Show("Dịch vụ đã được thêm thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Vui lòng chọn sản phẩm!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Đã xảy ra lỗi: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+
+
 
 
 
@@ -1085,14 +1136,93 @@ namespace DuAnn1
 
         private void btnxoadichvu_Click(object sender, EventArgs e)
         {
+            try
+            {
+                if (int.TryParse(txtiddichvu.Text.Trim(), out int idDichVu))
+                {
+                    var confirmResult = MessageBox.Show("Bạn có chắc chắn muốn xóa dịch vụ này không?", "Xác nhận xóa", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (confirmResult == DialogResult.Yes)
+                    {
+                        dichvuBLL.CNXoa(idDichVu);
 
+                        GetCaidatdichvu();
+
+                        MessageBox.Show("Dịch vụ đã được xóa thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("ID dịch vụ không hợp lệ!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Đã xảy ra lỗi khi xóa dịch vụ: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
+
 
 
         private void dgvdichvu_CellClick(object sender, DataGridViewCellEventArgs e)
         {
+            if (e.RowIndex >= 0)
+            {
+                try
+                {
+                    DataGridViewRow rowhientai = dgvdichvu.Rows[e.RowIndex];
 
+                    txtiddichvu.Text = rowhientai.Cells["ID"].Value?.ToString() ?? string.Empty;
+                    txttendichvu.Text = rowhientai.Cells["Tên Dịch Vụ"].Value?.ToString() ?? string.Empty;
+                    txtmotadichvu.Text = rowhientai.Cells["Mô tả"].Value?.ToString() ?? string.Empty;
+                    cbbloaidichvu.SelectedItem = rowhientai.Cells["Loại Dịch Vụ"].Value?.ToString() ?? string.Empty;
+
+                    try
+                    {
+                        var giaDichVuString = rowhientai.Cells["Giá Dịch Vụ"].Value?.ToString();
+                        if (decimal.TryParse(giaDichVuString, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal giaDichVu))
+                        {
+                            txtgiadichvu.Text = giaDichVu.ToString(CultureInfo.InvariantCulture);
+                        }
+                        else
+                        {
+                            txtgiadichvu.Text = string.Empty;
+                            Debug.WriteLine("Giá dịch vụ không thể chuyển đổi thành decimal.");
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        txtgiadichvu.Text = string.Empty;
+                    }
+
+                    txtthoigiandichvu.Text = rowhientai.Cells["Thời gian"].Value?.ToString() ?? string.Empty;
+
+                    if (rowhientai.Cells["Ngày Bắt Đầu Cung cấp"].Value is DateTime startDate)
+                    {
+                        dtpbatdaudichvu.Value = startDate;
+                    }
+                    if (rowhientai.Cells["Ngày Kết Thúc Cung cấp"].Value is DateTime endDate)
+                    {
+                        dtpketthucdichvu.Value = endDate;
+                    }
+
+                    txtghichudichvu.Text = rowhientai.Cells["Ghi Chú"].Value?.ToString() ?? string.Empty;
+
+                    bool trangthai = rowhientai.Cells["Trạng Thái"].Value is bool status ? status : false;
+                    rdohtdv.Checked = trangthai;
+                    rdoxulibhdv.Checked = !trangthai;
+                    cbbidsanpham.Text = string.Empty;
+                }
+                catch (Exception ex)
+                {
+                }
+            }
         }
+
+
+
+
+
+
 
 
 
@@ -1141,8 +1271,74 @@ namespace DuAnn1
 
         private void btnsuadichvu_Click(object sender, EventArgs e)
         {
+            try
+            {
+                if (int.TryParse(txtiddichvu.Text.Trim(), out int idDichVu))
+                {
+                    string tenDichVu = txttendichvu.Text.Trim();
+                    string moTa = txtmotadichvu.Text.Trim();
+                    string loaiDichVu = cbbloaidichvu.SelectedItem?.ToString();
+                    decimal giaDichVu = decimal.TryParse(txtgiadichvu.Text.Trim(), out var gia) ? gia : 0;
+                    string thoiGian = txtthoigiandichvu.Text.Trim();
+                    DateTime ngayBatDau = dtpbatdaudichvu.Value;
+                    DateTime ngayKetThuc = dtpketthucdichvu.Value;
+                    string ghiChu = txtghichudichvu.Text.Trim();
+                    bool trangThai = rdohtdv.Checked;
 
+                    var dichVuCapNhat = new DichVu
+                    {
+                        IdDichVu = idDichVu,
+                        TenDichVu = tenDichVu,
+                        MoTa = moTa,
+                        LoaiDichVu = loaiDichVu,
+                        GiaDichVu = giaDichVu,
+                        ThoiGianThucHien = thoiGian,
+                        NgayBatDauCungCap = ngayBatDau,
+                        NgayKetThucCungCap = ngayKetThuc,
+                        GhiChu = ghiChu,
+                        Trangthai = trangThai
+                    };
 
+                    dichvuBLL.CNsua(dichVuCapNhat);
+
+                    GetCaidatdichvu();
+
+                    MessageBox.Show("Dịch vụ đã được cập nhật thành công!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("ID dịch vụ không hợp lệ!", "Cảnh báo", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Đã xảy ra lỗi khi cập nhật dịch vụ: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnresetdichvu_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // Xóa dữ liệu trên các điều khiển
+                txtiddichvu.Text = string.Empty;
+                txttendichvu.Text = string.Empty;
+                txtmotadichvu.Text = string.Empty;
+                cbbloaidichvu.SelectedIndex = -1; 
+                txtgiadichvu.Text = string.Empty;
+                txtthoigiandichvu.Text = string.Empty;
+                dtpbatdaudichvu.Value = DateTime.Now;
+                dtpketthucdichvu.Value = DateTime.Now; 
+                txtghichudichvu.Text = string.Empty;
+                rdohtdv.Checked = false;
+                rdoxulibhdv.Checked = false;
+
+                MessageBox.Show("Dữ liệu đã được reset!", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Đã xảy ra lỗi khi reset dữ liệu: {ex.Message}", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
     }

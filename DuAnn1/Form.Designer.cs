@@ -67,6 +67,8 @@
             dgvsanpham = new DataGridView();
             label1 = new Label();
             hoadon = new Panel();
+            groupBox5 = new GroupBox();
+            dataGridView2 = new DataGridView();
             groupBox4 = new GroupBox();
             dataGridView1 = new DataGridView();
             label12 = new Label();
@@ -186,6 +188,8 @@
             groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dgvsanpham).BeginInit();
             hoadon.SuspendLayout();
+            groupBox5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
             groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             vocher.SuspendLayout();
@@ -600,6 +604,7 @@
             // 
             // hoadon
             // 
+            hoadon.Controls.Add(groupBox5);
             hoadon.Controls.Add(groupBox4);
             hoadon.Controls.Add(label12);
             hoadon.Location = new Point(3, 109);
@@ -607,12 +612,33 @@
             hoadon.Size = new Size(1539, 864);
             hoadon.TabIndex = 27;
             // 
+            // groupBox5
+            // 
+            groupBox5.Controls.Add(dataGridView2);
+            groupBox5.Location = new Point(511, 16);
+            groupBox5.Name = "groupBox5";
+            groupBox5.Size = new Size(1010, 370);
+            groupBox5.TabIndex = 28;
+            groupBox5.TabStop = false;
+            groupBox5.Text = "Bảng Sản Phẩm";
+            // 
+            // dataGridView2
+            // 
+            dataGridView2.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView2.Location = new Point(16, 35);
+            dataGridView2.Name = "dataGridView2";
+            dataGridView2.RowHeadersWidth = 51;
+            dataGridView2.RowTemplate.Height = 29;
+            dataGridView2.Size = new Size(972, 323);
+            dataGridView2.TabIndex = 0;
+            // 
             // groupBox4
             // 
             groupBox4.Controls.Add(dataGridView1);
-            groupBox4.Location = new Point(478, 1);
+            groupBox4.Location = new Point(515, 392);
             groupBox4.Name = "groupBox4";
-            groupBox4.Size = new Size(1053, 863);
+            groupBox4.Size = new Size(1010, 472);
             groupBox4.TabIndex = 27;
             groupBox4.TabStop = false;
             groupBox4.Text = "Bảng Hóa Đơn";
@@ -621,11 +647,11 @@
             // 
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(15, 27);
+            dataGridView1.Location = new Point(16, 35);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.RowHeadersWidth = 51;
             dataGridView1.RowTemplate.Height = 29;
-            dataGridView1.Size = new Size(1029, 308);
+            dataGridView1.Size = new Size(972, 506);
             dataGridView1.TabIndex = 0;
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
@@ -932,6 +958,7 @@
             btnresetdichvu.TabIndex = 25;
             btnresetdichvu.Text = "Reset ";
             btnresetdichvu.UseVisualStyleBackColor = true;
+            btnresetdichvu.Click += btnresetdichvu_Click;
             // 
             // btnxoadichvu
             // 
@@ -1753,12 +1780,12 @@
             Controls.Add(btnhoadon);
             Controls.Add(btnsanpham);
             Controls.Add(logo);
-            Controls.Add(hoadon);
             Controls.Add(baohanhdichvu);
             Controls.Add(sanpham);
             Controls.Add(nhanvien);
             Controls.Add(khachhang);
             Controls.Add(vocher);
+            Controls.Add(hoadon);
             Name = "Form";
             Text = "Form";
             sanpham.ResumeLayout(false);
@@ -1767,6 +1794,8 @@
             ((System.ComponentModel.ISupportInitialize)dgvsanpham).EndInit();
             hoadon.ResumeLayout(false);
             hoadon.PerformLayout();
+            groupBox5.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)dataGridView2).EndInit();
             groupBox4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             vocher.ResumeLayout(false);
@@ -1944,5 +1973,7 @@
         private RadioButton rdohtdv;
         private RadioButton rdoxulibhdv;
         private Label label61;
+        private GroupBox groupBox5;
+        private DataGridView dataGridView2;
     }
 }
