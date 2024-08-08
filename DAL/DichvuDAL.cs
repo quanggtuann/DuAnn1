@@ -1,4 +1,6 @@
 ﻿using DTO.Models;
+using Microsoft.Data.SqlClient;
+using System.Data;
 
 namespace DAL
 {
@@ -72,6 +74,47 @@ namespace DAL
         {
             var sanPham = _context.Sanphams.Find(idSanPham);
             return sanPham != null ? sanPham.Ten : "Không tìm thấy";
+        }
+
+
+        private string connectionString;
+
+        public DichvuDAL(string connectionString)
+        {
+            this.connectionString = connectionString;
+        }
+
+        public DataTable GetDichVuData(string loaiDichVu)
+        {
+            DataTable dataTable = new DataTable();
+            string query = @"
+            SELECT dv.ID_SanPham, dv.LoaiDichVu, dv.trangthai,
+                   csbh.ID_BaoHanh, dv.NgayBatDauCungCap, dv.NgayKetThucCungCap,
+                   ttlh.SDT, ttlh.Email, ttlh.DiaChi
+            FROM DichVu AS dv
+            INNER JOIN ChinhSachBaoHanh AS csbh ON dv.ID_DichVu = csbh.ID_DichVu
+            INNER JOIN ThongTinLienHe AS ttlh ON csbh.ID_BaoHanh = ttlh.ID_BaoHanh
+            WHERE dv.LoaiDichVu = @LoaiDichVu";
+
+            using (SqlConnection connection = new SqlConnection(connectionString))
+            {
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@LoaiDichVu", loaiDichVu);
+
+                    SqlDataAdapter dataAdapter = new SqlDataAdapter(command);
+                    try
+                    {
+                        dataAdapter.Fill(dataTable);
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Lỗi khi lấy dữ liệu: {ex.Message}");
+                    }
+                }
+            }
+
+            return dataTable;
         }
     }
 }

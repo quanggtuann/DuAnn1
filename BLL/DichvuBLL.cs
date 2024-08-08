@@ -1,5 +1,6 @@
 ﻿using DAL;
 using DTO.Models;
+using System.Data;
 using System.Dynamic;
 
 namespace BLL
@@ -48,6 +49,10 @@ namespace BLL
         public string GetSanPhamNameById(int idSanPham)
         {
             return dichvudal.GetSanPhamNameById(idSanPham);
+        }
+        public DataTable GetDichVuData(string loaiDichVu)
+        {
+            return dichvudal.GetDichVuData(loaiDichVu);
         }
     }
 }

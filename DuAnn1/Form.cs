@@ -4,6 +4,7 @@ using DTO.Models;
 using System.Data;
 using System.Diagnostics;
 using System.Globalization;
+using System.Windows.Forms;
 
 namespace DuAnn1
 {
@@ -1127,13 +1128,6 @@ namespace DuAnn1
         }
 
 
-
-
-
-
-
-
-
         private void btnxoadichvu_Click(object sender, EventArgs e)
         {
             try
@@ -1217,15 +1211,6 @@ namespace DuAnn1
                 }
             }
         }
-
-
-
-
-
-
-
-
-
 
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
@@ -1320,15 +1305,14 @@ namespace DuAnn1
         {
             try
             {
-                // Xóa dữ liệu trên các điều khiển
                 txtiddichvu.Text = string.Empty;
                 txttendichvu.Text = string.Empty;
                 txtmotadichvu.Text = string.Empty;
-                cbbloaidichvu.SelectedIndex = -1; 
+                cbbloaidichvu.SelectedIndex = -1;
                 txtgiadichvu.Text = string.Empty;
                 txtthoigiandichvu.Text = string.Empty;
                 dtpbatdaudichvu.Value = DateTime.Now;
-                dtpketthucdichvu.Value = DateTime.Now; 
+                dtpketthucdichvu.Value = DateTime.Now;
                 txtghichudichvu.Text = string.Empty;
                 rdohtdv.Checked = false;
                 rdoxulibhdv.Checked = false;
@@ -1341,5 +1325,9 @@ namespace DuAnn1
             }
         }
 
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            
+        }
     }
 }

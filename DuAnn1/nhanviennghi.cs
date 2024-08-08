@@ -1,4 +1,4 @@
-﻿//using BLL;
+﻿using BLL;
 using System.Data;
 
 namespace DuAnn1
@@ -14,7 +14,7 @@ namespace DuAnn1
         {
         }
 
-        //private NhanvienBLL NhanvienBLL = new NhanvienBLL();
+        private NhanvienBLL NhanvienBLL = new NhanvienBLL();
         private DataTable dtnv = new DataTable();
 
         private void Getloadbangnv()
@@ -35,27 +35,27 @@ namespace DuAnn1
 
         private void GetloadCaiDatnv()
         {
-            //dtnv.Rows.Clear();
-            //var nvs = NhanvienBLL.LayDanhSachNhanVienNghiViec();
-            //MessageBox.Show($"Số nhân viên nghỉ việc: {nvs.Count}");
+            dtnv.Rows.Clear();
+            var nvs = NhanvienBLL.LayDanhSachNhanVienNghiViec();
+            MessageBox.Show($"Số nhân viên nghỉ việc: {nvs.Count}");
 
-            //foreach (var nv in nvs)
-            //{
-            //    DataRow dr = dtnv.NewRow();
-            //    dr["ID Nhân Viên"] = nv.IdNhanVien;
-            //    dr["Họ Tên"] = nv.HoTen;
-            //    dr["Chức Vụ"] = nv.ChucVu;
-            //    dr["Giới Tính"] = nv.Gioitinh;
-            //    dr["Ngày Bắt Đầu Làm"] = nv.NgayBatDauLam;
-            //    dr["Mức Lương"] = nv.MucLuong;
-            //    dr["Email"] = nv.Email;
-            //    dr["Số Điện Thoại"] = nv.Sdt;
-            //    dr["Căn Cước Công Nhân"] = nv.Cccd;
-            //    dr["Trạng Thái"] = nv.Trangthai;
-            //    dtnv.Rows.Add(dr);
-            //}
+            foreach (var nv in nvs)
+            {
+                DataRow dr = dtnv.NewRow();
+                dr["ID Nhân Viên"] = nv.IdNhanVien;
+                dr["Họ Tên"] = nv.HoTen;
+                dr["Chức Vụ"] = nv.ChucVu;
+                dr["Giới Tính"] = nv.Gioitinh;
+                dr["Ngày Bắt Đầu Làm"] = nv.NgayBatDauLam;
+                dr["Mức Lương"] = nv.MucLuong;
+                dr["Email"] = nv.Email;
+                dr["Số Điện Thoại"] = nv.Sdt;
+                dr["Căn Cước Công Nhân"] = nv.Cccd;
+                dr["Trạng Thái"] = nv.Trangthai;
+                dtnv.Rows.Add(dr);
+            }
 
-            //dgvnhanviennghi.Refresh();
+            dgvnhanviennghi.Refresh();
         }
 
         private void nhanviennghi_Load(object sender, EventArgs e)

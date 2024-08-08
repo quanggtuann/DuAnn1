@@ -95,6 +95,7 @@
             label34 = new Label();
             dgvvocher = new DataGridView();
             baohanhdichvu = new Panel();
+            button1 = new Button();
             rdohtdv = new RadioButton();
             rdoxulibhdv = new RadioButton();
             label61 = new Label();
@@ -885,6 +886,7 @@
             // 
             // baohanhdichvu
             // 
+            baohanhdichvu.Controls.Add(button1);
             baohanhdichvu.Controls.Add(rdohtdv);
             baohanhdichvu.Controls.Add(rdoxulibhdv);
             baohanhdichvu.Controls.Add(label61);
@@ -919,6 +921,16 @@
             baohanhdichvu.TabIndex = 22;
             baohanhdichvu.Paint += baohanhdichvu_Paint;
             // 
+            // button1
+            // 
+            button1.Location = new Point(817, 278);
+            button1.Name = "button1";
+            button1.Size = new Size(122, 29);
+            button1.TabIndex = 30;
+            button1.Text = "bảo hành";
+            button1.UseVisualStyleBackColor = true;
+            button1.Click += button1_Click_1;
+            // 
             // rdohtdv
             // 
             rdohtdv.AutoSize = true;
@@ -952,7 +964,7 @@
             // 
             // btnresetdichvu
             // 
-            btnresetdichvu.Location = new Point(1157, 277);
+            btnresetdichvu.Location = new Point(1349, 277);
             btnresetdichvu.Name = "btnresetdichvu";
             btnresetdichvu.Size = new Size(94, 29);
             btnresetdichvu.TabIndex = 25;
@@ -962,7 +974,7 @@
             // 
             // btnxoadichvu
             // 
-            btnxoadichvu.Location = new Point(1023, 277);
+            btnxoadichvu.Location = new Point(1249, 277);
             btnxoadichvu.Name = "btnxoadichvu";
             btnxoadichvu.Size = new Size(94, 29);
             btnxoadichvu.TabIndex = 24;
@@ -972,7 +984,7 @@
             // 
             // btnsuadichvu
             // 
-            btnsuadichvu.Location = new Point(906, 277);
+            btnsuadichvu.Location = new Point(1149, 277);
             btnsuadichvu.Name = "btnsuadichvu";
             btnsuadichvu.Size = new Size(94, 29);
             btnsuadichvu.TabIndex = 23;
@@ -982,7 +994,7 @@
             // 
             // btnthemdichvu
             // 
-            btnthemdichvu.Location = new Point(771, 277);
+            btnthemdichvu.Location = new Point(1049, 277);
             btnthemdichvu.Name = "btnthemdichvu";
             btnthemdichvu.Size = new Size(94, 29);
             btnthemdichvu.TabIndex = 22;
@@ -1975,5 +1987,6 @@
         private Label label61;
         private GroupBox groupBox5;
         private DataGridView dataGridView2;
+        private Button button1;
     }
 }
